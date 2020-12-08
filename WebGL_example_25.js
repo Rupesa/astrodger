@@ -34,9 +34,9 @@ var globalTz = 0.0;
 
 // The translation vector
 
-var tx = 0.0;
+var tx = -0.25;
 
-var ty = 0.0;
+var ty = -0.25;
 
 var tz = 0.0;
 
@@ -66,19 +66,19 @@ var globalRotationYY_SPEED = 1;
 
 // Local Animation controls
 
-var rotationXX_ON = 1;
+var rotationXX_ON = 0;
 
 var rotationXX_DIR = 1;
 
 var rotationXX_SPEED = 1;
  
-var rotationYY_ON = 1;
+var rotationYY_ON = 0;
 
 var rotationYY_DIR = 1;
 
 var rotationYY_SPEED = 1;
  
-var rotationZZ_ON = 1;
+var rotationZZ_ON = 0;
 
 var rotationZZ_DIR = 1;
 
@@ -90,7 +90,7 @@ var primitiveType = null;
  
 // To allow choosing the projection type
 
-var projectionType = 0;
+var projectionType = 1;
 
 // NEW --- Model Material Features
 
@@ -114,14 +114,194 @@ var nPhong = 100;
 
 var vertices = [
 
-		// FRONTAL TRIANGLE
+		// FRONT FACE
 		 
-		-0.5, -0.5,  0.5,
+		-0.25, -0.25,  0.25,
 		 
-		 0.5, -0.5,  0.5,
+		 0.25, -0.25,  0.25,
 		 
-		 0.5,  0.5,  0.5,
+		 0.25,  0.25,  0.25,
+
+		 
+		 0.25,  0.25,  0.25,
+		 
+		-0.25,  0.25,  0.25,
+		 
+		-0.25, -0.25,  0.25,
+		
+		// TOP FACE
+		
+		-0.25,  0.25,  0.25,
+		 
+		 0.25,  0.25,  0.25,
+		 
+		 0.25,  0.25, -0.25,
+
+		 
+		 0.25,  0.25, -0.25,
+		 
+		-0.25,  0.25, -0.25,
+		 
+		-0.25,  0.25,  0.25,
+		
+		// BOTTOM FACE 
+		
+		-0.25, -0.25, -0.25,
+		 
+		 0.25, -0.25, -0.25,
+		 
+		 0.25, -0.25,  0.25,
+
+		 
+		 0.25, -0.25,  0.25,
+		 
+		-0.25, -0.25,  0.25,
+		 
+		-0.25, -0.25, -0.25,
+		
+		// LEFT FACE 
+		
+		-0.25,  0.25,  0.25,
+		 
+		-0.25, -0.25, -0.25,
+
+		-0.25, -0.25,  0.25,
+		 
+		 
+		-0.25,  0.25,  0.25,
+		 
+		-0.25,  0.25, -0.25,
+		 
+		-0.25, -0.25, -0.25,
+		
+		// RIGHT FACE 
+		
+		 0.25,  0.25, -0.25,
+		 
+		 0.25, -0.25,  0.25,
+
+		 0.25, -0.25, -0.25,
+		 
+		 
+		 0.25,  0.25, -0.25,
+		 
+		 0.25,  0.25,  0.25,
+		 
+		 0.25, -0.25,  0.25,
+		
+		// BACK FACE 
+		
+		-0.25,  0.25, -0.25,
+		 
+		 0.25, -0.25, -0.25,
+
+		-0.25, -0.25, -0.25,
+		 
+		 
+		-0.25,  0.25, -0.25,
+		 
+		 0.25,  0.25, -0.25,
+		 
+		 0.25, -0.25, -0.25,			 
 ];
+
+// And their colour
+
+var colors = [
+
+		 // FRONT FACE
+		 	
+		 1.00,  0.00,  0.00,
+		 
+		 1.00,  0.00,  0.00,
+		 
+		 1.00,  0.00,  0.00,
+
+		 	
+		 1.00,  1.00,  0.00,
+		 
+		 1.00,  1.00,  0.00,
+		 
+		 1.00,  1.00,  0.00,
+		 			 
+		 // TOP FACE
+		 	
+		 0.00,  0.00,  0.00,
+		 
+		 0.00,  0.00,  0.00,
+		 
+		 0.00,  0.00,  0.00,
+
+		 	
+		 0.50,  0.50,  0.50,
+		 
+		 0.50,  0.50,  0.50,
+		 
+		 0.50,  0.50,  0.50,
+		 			 
+		 // BOTTOM FACE
+		 	
+		 0.00,  1.00,  0.00,
+		 
+		 0.00,  1.00,  0.00,
+		 
+		 0.00,  1.00,  0.00,
+
+		 	
+		 0.00,  1.00,  1.00,
+		 
+		 0.00,  1.00,  1.00,
+		 
+		 0.00,  1.00,  1.00,
+		 			 
+		 // LEFT FACE
+		 	
+		 0.00,  0.00,  1.00,
+		 
+		 0.00,  0.00,  1.00,
+		 
+		 0.00,  0.00,  1.00,
+
+		 	
+		 1.00,  0.00,  1.00,
+		 
+		 1.00,  0.00,  1.00,
+		 
+		 1.00,  0.00,  1.00,
+		 			 
+		 // RIGHT FACE
+		 	
+		 0.25,  0.50,  0.50,
+		 
+		 0.25,  0.50,  0.50,
+		 
+		 0.25,  0.50,  0.50,
+
+		 	
+		 0.50,  0.25,  0.00,
+		 
+		 0.50,  0.25,  0.00,
+		 
+		 0.50,  0.25,  0.00,
+		 			 
+		 			 
+		 // BACK FACE
+		 	
+		 0.25,  0.00,  0.75,
+		 
+		 0.25,  0.00,  0.75,
+		 
+		 0.25,  0.00,  0.75,
+
+		 	
+		 0.50,  0.35,  0.35,
+		 
+		 0.50,  0.35,  0.35,
+		 
+		 0.50,  0.35,  0.35,			 			 
+];
+
+
 
 var normals = [
 
@@ -138,16 +318,6 @@ var normals = [
 
 // They are to be computed by the Phong Illumination Model
 
-var colors = [
-
-		 // FRONTAL TRIANGLE
-		 	
-		 1.00,  0.00,  0.00,
-		 
-		 1.00,  0.00,  0.00,
-		 
-		 1.00,  0.00,  0.00,
-];
 
 //----------------------------------------------------------------------------
 //
@@ -434,8 +604,8 @@ function drawModel( angleXX, angleYY, angleZZ,
 	gl.uniformMatrix4fv(mvUniform, false, new Float32Array(flatten(mvMatrix)));
 	
 	// NEW - Aux. Function for computing the illumination
-	
-	computeIllumination( mvMatrix );
+	//coco
+	//computeIllumination( mvMatrix );
 	
 	// Associating the data to the vertex shader
 	
@@ -599,7 +769,16 @@ function animate() {
 
 // Timer
 
+cont = 0;
+
 function tick() {
+
+	if (cont == 200) {
+		//vertices = vertices + [-0.25, -0.25,  0.25];
+		//colors = colors + [1, 0, 0];
+	}
+
+	cont += 1;
 	
 	requestAnimFrame(tick);
 	
@@ -616,70 +795,6 @@ function tick() {
 //  User Interaction
 //
 
-function loadFile(){
-
-	var file = new File([""], "modeloCuboV0.txt")
-	console.log(file)
-	
-	var reader = new FileReader();
-	
-	reader.onload = function( progressEvent ){
-		
-		// Entire file read as a string
-		
-		// The tokens/values in the file
-
-		// Separation between values is 1 or mode whitespaces
-
-		var tokens = this.result.split(/\s\s*/);
-
-		// Array of values; each value is a string
-		
-		var numVertices = parseInt( tokens[0] );
-		
-		// For every vertex we have 3 floating point values
-		
-		var i, j;
-		
-		var aux = 1;
-		
-		var newVertices = [];
-		
-		for( i = 0; i < numVertices; i++ ) {
-		
-			for( j = 0; j < 3; j++ ) {
-				
-				newVertices[ 3 * i + j ] = parseFloat( tokens[ aux++ ] );
-			}
-		}
-				
-		// Assigning to the current model
-		
-		vertices = newVertices.slice();
-		
-		// NEW --- Computing the triangle normal vector for every vertex
-		
-		computeVertexNormals( vertices, normals );
-		
-		// To render the model just read
-	
-		initBuffers();
-
-		// RESET the transformations - NEED AUXILIARY FUNCTION !!
-		
-		tx = 0.5
-		ty = 0.0
-		tz = 0.0;
-					
-		angleXX = angleYY = angleZZ = 0.0;
-		
-		sx = sy = sz = 0.1;
-	};
-	
-	// Entire file read as a string
-		
-	reader.readAsText( file );
-}
 
 //----------------------------------------------------------------------------
 
@@ -880,7 +995,7 @@ function setEventListeners(){
 		
 		// Updating
 		
-		ty += 0.25;
+		ty += 0.5;
 						
 		// Render the viewport
 		
@@ -891,7 +1006,7 @@ function setEventListeners(){
 		
 		// Updating
 		
-		ty -= 0.25;
+		ty -= 0.5;
 		
 		// Render the viewport
 		
@@ -911,7 +1026,42 @@ function setEventListeners(){
 		// Render the viewport
 		
 		drawScene();  
-	};  
+	};
+	
+	// Key events
+	document.addEventListener("keydown", function(event) {
+		var key = event.keyCode; // ASCII
+
+		switch(key){
+			case 37:	
+				if (tx > -0.75) tx -= 0.5;
+				break;
+			case 39:
+				if (tx < 0.75) tx += 0.5;
+				break;
+			case 38:
+				if (ty < 0.75) ty += 0.5;	
+				break;
+			case 40:
+				if (ty > -0.75) ty -= 0.5;
+				break;
+
+			case 187:
+				scale_up()
+				break;
+			case 189:
+				scale_down()
+				break;
+
+			case 82:
+				reset()
+				break;
+
+			default:
+				break;
+			}
+		}
+	);   
 
     // Dropdown list
 	
@@ -1157,8 +1307,6 @@ function runWebGL() {
 	
 
 	shaderProgram = initShaders( gl );
-
-	loadFile();
 	
 	setEventListeners();
 	

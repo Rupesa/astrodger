@@ -16,6 +16,7 @@
 // Global Variables
 //
 
+
 var gl = null; // WebGL context
 
 var shaderProgram = null;
@@ -23,6 +24,8 @@ var shaderProgram = null;
 var triangleVertexPositionBuffer = null;
 	
 var triangleVertexColorBuffer = null;
+
+var numAsteroide = Math.floor(Math.random() * 16);
 
 // The GLOBAL transformation parameters
 
@@ -32,7 +35,9 @@ var globalTz = 0.0;
 
 // The local transformation parameters
 
-// The translation vector
+// NAVE
+
+// The translation vector 
 
 var tx = -0.25;
 
@@ -50,11 +55,85 @@ var angleZZ = 0.0;
 
 // The scaling factors
 
-var sx = 0.5;
+var sx = 0.6;
 
-var sy = 0.5;
+var sy = 0.6;
 
-var sz = 0.5;
+var sz = 0.6;
+
+// ASTEROIDE
+
+
+var txasteroide = null;
+var tyasteroide = null;
+
+// The translation vector 
+
+var txasteroide0 = -0.75;
+var tyasteroide0 = 0.75;
+
+var txasteroide1 = -0.25;
+var tyasteroide1 = 0.75;
+
+var txasteroide2 = 0.25;
+var tyasteroide2 = 0.75;
+
+var txasteroide3 = 0.75;
+var tyasteroide3 = 0.75;
+
+var txasteroide4 = -0.25;
+var tyasteroide4 = 0.25;
+
+var txasteroide5 = -0.75;
+var tyasteroide5 = 0.25;
+
+var txasteroide6 = 0.25;
+var tyasteroide6 = 0.25;
+
+var txasteroide7 = 0.75;
+var tyasteroide7 = 0.25;
+
+var txasteroide8 = -0.75;
+var tyasteroide8 = -0.25;
+
+var txasteroide9 = -0.25;
+var tyasteroide9 = -0.25;
+
+var txasteroide10 = 0.25;
+var tyasteroide10 = -0.25;
+
+var txasteroide11 = 0.75;
+var tyasteroide11 = -0.25;
+
+var txasteroide12 = -0.75;
+var tyasteroide12 = -0.75;
+
+var txasteroide13 = -0.25;
+var tyasteroide13 = -0.75;
+
+var txasteroide14 = 0.25;
+var tyasteroide14 = -0.75;
+
+var txasteroide15 = 0.75;
+var tyasteroide15 = -0.75;
+
+var tzasteroide = -13;
+
+// The rotation angles in degrees
+
+var angleXX2 = 75;
+
+var angleYY2 = 0.0;
+
+var angleZZ2 = 0.0;
+
+// The scaling factors
+
+var sx2 = 0.1;
+
+var sy2 = 0.1;
+
+var sz2 = 0.1;
 
 // GLOBAL Animation controls
 
@@ -83,6 +162,8 @@ var rotationZZ_ON = 0;
 var rotationZZ_DIR = 1;
 
 var rotationZZ_SPEED = 1;
+
+var asteriodesMOVE_ON = 0;
  
 // To allow choosing the way of drawing the model triangles
 
@@ -301,6 +382,63 @@ var colors = [
 		 0.50,  0.35,  0.35,			 			 
 ];
 
+var verticesAsteroide = [
+
+	// FRONT FACE
+	 
+	-1.000000, 0.000000, -0.707000, 
+	0.000000, 1.000000, 0.707000, 
+	1.000000, 0.000000, -0.707000, 
+
+	1.000000, 0.000000, -0.707000, 
+	0.000000, 1.000000, 0.707000 ,
+	0.000000, -1.000000, 0.707000 ,
+
+	-1.000000, 0.000000, -0.707000 ,
+	0.000000, -1.000000, 0.707000 ,
+	0.000000, 1.000000, 0.707000 ,
+
+	-1.000000, 0.000000, -0.707000 ,
+	1.000000, 0.000000, -0.707000 ,
+	0.000000, -1.000000, 0.707000	,		 
+	];
+
+// And their colour
+
+var colorsAsteroide = [
+
+	 // FRONT FACE
+		 
+	 1.00,  0.00,  0.00,
+	 
+	 1.00,  0.00,  0.00,
+	 
+	 1.00,  0.00,  0.00,
+
+		 
+	 1.00,  1.00,  0.00,
+	 
+	 1.00,  1.00,  0.00,
+	 
+	 1.00,  1.00,  0.00,
+				  
+	 // TOP FACE
+		 
+	 0.00,  0.00,  0.00,
+	 
+	 0.00,  0.00,  0.00,
+	 
+	 0.00,  0.00,  0.00,
+
+		 
+	 0.50,  0.50,  0.50,
+	 
+	 0.50,  0.50,  0.50,
+	 
+	 0.50,  0.50,  0.50,
+		 
+];
+
 
 
 var normals = [
@@ -331,7 +469,7 @@ var normals = [
 
 // Handling the Vertex and the Color Buffers
 
-function initBuffers() {	
+function initBuffersNave() {	
 	
 	// Coordinates
 		
@@ -354,6 +492,37 @@ function initBuffers() {
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 	triangleVertexColorBuffer.itemSize = 3;
 	triangleVertexColorBuffer.numItems = colors.length / 3;			
+
+	// Associating to the vertex shader
+	
+	gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, 
+			triangleVertexColorBuffer.itemSize, 
+			gl.FLOAT, false, 0, 0);
+}
+
+function initBuffersAsteroide() {	
+	
+	// Coordinates
+		
+	triangleVertexPositionBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verticesAsteroide), gl.STATIC_DRAW);
+	triangleVertexPositionBuffer.itemSize = 3;
+	triangleVertexPositionBuffer.numItems = verticesAsteroide.length / 3;			
+
+	// Associating to the vertex shader
+	
+	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 
+			triangleVertexPositionBuffer.itemSize, 
+			gl.FLOAT, false, 0, 0);
+	
+	// Colors
+		
+	triangleVertexColorBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
+	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colorsAsteroide), gl.STATIC_DRAW);
+	triangleVertexColorBuffer.itemSize = 3;
+	triangleVertexColorBuffer.numItems = colorsAsteroide.length / 3;			
 
 	// Associating to the vertex shader
 	
@@ -575,7 +744,7 @@ function computeIllumination( mvMatrix ) {
 	}
 }
 
-function drawModel( angleXX, angleYY, angleZZ, 
+function drawModelNave( angleXX, angleYY, angleZZ, 
 					sx, sy, sz,
 					tx, ty, tz,
 					mvMatrix,
@@ -611,7 +780,7 @@ function drawModel( angleXX, angleYY, angleZZ,
 	
 	// This can be done in a better way !!
 
-	initBuffers();
+	initBuffersNave();
 	
 	// Drawing 
 	
@@ -636,6 +805,70 @@ function drawModel( angleXX, angleYY, angleZZ,
 				
 		gl.drawArrays(primitiveType, 0, triangleVertexPositionBuffer.numItems); 
 		
+	}	
+}
+
+function drawModelAsteroide( angleXX2, angleYY2, angleZZ2, 
+	sx2, sy2, sz2,
+	txasteroide1, tyasteroide1, tzasteroide,
+	mvMatrix,
+	primitiveType ) {
+
+	// The the global model transformation is an input
+
+	// Concatenate with the particular model transformations
+
+	// Pay attention to transformation order !!
+
+	mvMatrix = mult( mvMatrix, translationMatrix( txasteroide1, tyasteroide1, tzasteroide ) );
+			
+	mvMatrix = mult( mvMatrix, rotationZZMatrix( angleZZ2 ) );
+
+	mvMatrix = mult( mvMatrix, rotationYYMatrix( angleYY2 ) );
+
+	mvMatrix = mult( mvMatrix, rotationXXMatrix( angleXX2 ) );
+
+	mvMatrix = mult( mvMatrix, scalingMatrix( sx2, sy2, sz2 ) );
+			
+	// Passing the Model View Matrix to apply the current transformation
+
+	var mvUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+
+	gl.uniformMatrix4fv(mvUniform, false, new Float32Array(flatten(mvMatrix)));
+
+	// NEW - Aux. Function for computing the illumination
+	//coco
+	//computeIllumination( mvMatrix );
+
+	// Associating the data to the vertex shader
+
+	// This can be done in a better way !!
+
+	initBuffersAsteroide();
+
+	// Drawing 
+
+	// primitiveType allows drawing as filled triangles / wireframe / vertices
+
+	if( primitiveType == gl.LINE_LOOP ) {
+
+	// To simulate wireframe drawing!
+
+	// No faces are defined! There are no hidden lines!
+
+	// Taking the vertices 3 by 3 and drawing a LINE_LOOP
+
+	var i;
+
+	for( i = 0; i < triangleVertexPositionBuffer.numItems / 3; i++ ) {
+
+	gl.drawArrays( primitiveType, 3 * i, 3 ); 
+	}
+	}	
+	else {
+
+	gl.drawArrays(primitiveType, 0, triangleVertexPositionBuffer.numItems); 
+
 	}	
 }
 
@@ -700,11 +933,96 @@ function drawScene() {
 	
 	// Instantianting the current model
 		
-	drawModel( angleXX, angleYY, angleZZ, 
+	drawModelNave( angleXX, angleYY, angleZZ, 
 	           sx, sy, sz,
 	           tx, ty, tz,
 	           mvMatrix,
-	           primitiveType );
+			   primitiveType );
+
+	
+		
+	console.log(numAsteroide);
+
+	switch(numAsteroide){
+		case 0:	
+			txasteroide = txasteroide0;
+			tyasteroide = tyasteroide0;
+			break;
+		case 1:	
+			txasteroide = txasteroide1;
+			tyasteroide = tyasteroide1;
+			break;
+		case 2:
+			txasteroide = txasteroide2;
+			tyasteroide = tyasteroide2;
+			break;
+		case 3:	
+			txasteroide = txasteroide3;
+			tyasteroide = tyasteroide3;
+			break;
+		case 4:
+			txasteroide = txasteroide4;
+			tyasteroide = tyasteroide4;
+			break;
+		case 5:	
+			txasteroide = txasteroide5;
+			tyasteroide = tyasteroide5;
+			break;
+		case 6:
+			txasteroide = txasteroide6;
+			tyasteroide = tyasteroide6;
+			break;
+		case 7:	
+			txasteroide = txasteroide7;
+			tyasteroide = tyasteroide7;
+			break;
+		case 8:
+			txasteroide = txasteroide8;
+			tyasteroide = tyasteroide8;
+			break;
+		case 9:	
+			txasteroide = txasteroide9;
+			tyasteroide = tyasteroide9;
+			break;
+		case 10:
+			txasteroide = txasteroide10;
+			tyasteroide = tyasteroide10;
+			break;
+		case 11:	
+			txasteroide = txasteroide11;
+			tyasteroide = tyasteroide11;
+			break;
+		case 12:
+			txasteroide = txasteroide12;
+			tyasteroide = tyasteroide12;
+			break;
+		case 13:	
+			txasteroide = txasteroide13;
+			tyasteroide = tyasteroide13;
+			break;
+		case 14:
+			txasteroide = txasteroide14;
+			tyasteroide = tyasteroide14;
+			break;
+		case 15:	
+			txasteroide = txasteroide15;
+			tyasteroide = tyasteroide15;
+			break;
+
+
+		default:
+			break;
+		}
+		
+		
+	drawModelAsteroide( angleXX2, angleYY2, angleZZ2, 
+		sx2, sy2, sz2,
+		txasteroide, tyasteroide, tzasteroide,
+		mvMatrix,
+		primitiveType );
+	
+	
+	console.log("fim");
 }
 
 //----------------------------------------------------------------------------
@@ -736,6 +1054,7 @@ function animate() {
 		if( rotationXX_ON ) {
 
 			angleXX += rotationXX_DIR * rotationXX_SPEED * (90 * elapsed) / 1000.0;
+			// console.log(angleXX); 
 	    }
 
 		if( rotationYY_ON ) {
@@ -746,7 +1065,17 @@ function animate() {
 		if( rotationZZ_ON ) {
 
 			angleZZ += rotationZZ_DIR * rotationZZ_SPEED * (90 * elapsed) / 1000.0;
-	    }
+		}
+		
+		if (asteriodesMOVE_ON) {
+			tzasteroide += elapsed / 100.0;
+			if(tzasteroide >=3){
+				tzasteroide = -13;
+				numAsteroide = Math.floor(Math.random() * 16);
+
+			}
+			// console.log(tzasteroide);
+		}
 
 		// Rotating the light sources
 	
@@ -880,7 +1209,7 @@ function setEventListeners(){
 						
 			// To render the model just read
 		
-			initBuffers();
+			initBuffersNave();
 
 			// RESET the transformations - NEED AUXILIARY FUNCTION !!
 			
@@ -949,7 +1278,7 @@ function setEventListeners(){
 			
 			// To render the model just read
 		
-			initBuffers();
+			initBuffersNave();
 
 			// RESET the transformations - NEED AUXILIARY FUNCTION !!
 			
@@ -1220,7 +1549,21 @@ function setEventListeners(){
 	document.getElementById("ZZ-faster-button").onclick = function(){
 		
 		rotationZZ_SPEED *= 1.25;  
-	};      
+	};
+	
+	document.getElementById("Start-asteriode-movement").onclick = function(){
+		
+		// Switching on / off
+		
+		if( asteriodesMOVE_ON ) {
+			
+			asteriodesMOVE_ON = 0;
+		}
+		else {
+			
+			asteriodesMOVE_ON = 1;
+		}  
+	};
 
 	document.getElementById("reset-button").onclick = function(){
 		
@@ -1310,7 +1653,7 @@ function runWebGL() {
 	
 	setEventListeners();
 	
-	initBuffers();
+	initBuffersNave();
 
 	
 	

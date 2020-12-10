@@ -63,6 +63,14 @@ var sz = 0.6;
 
 // ASTEROIDE
 
+var asteroides = [];
+for (i=0;i<30;i++) {
+	asteroides[i] = [0, 75, 0, 0, 0.1, 0.1, 0.1, -0.75, -0.75, -13];
+}
+
+var spawnCount = 0;
+
+var spawnTop = 50;
 
 var txasteroide = null;
 var tyasteroide = null;
@@ -164,6 +172,8 @@ var rotationZZ_DIR = 1;
 var rotationZZ_SPEED = 1;
 
 var asteriodesMOVE_ON = 0;
+
+var score = 0;
  
 // To allow choosing the way of drawing the model triangles
 
@@ -941,7 +951,7 @@ function drawScene() {
 
 	
 		
-	console.log(numAsteroide);
+	//console.log(numAsteroide);
 
 	switch(numAsteroide){
 		case 0:	
@@ -1016,12 +1026,9 @@ function drawScene() {
 	
 	
 		
-	drawModelAsteroide( angleXX2, angleYY2, angleZZ2, 
-		sx2, sy2, sz2,
-		txasteroide, tyasteroide, tzasteroide,
-		mvMatrix,
-		primitiveType );
+	addAsteroid(mvMatrix, txasteroide, tyasteroide, tzasteroide);
 
+	/*
 	console.log("asteriode");
 	console.log(tx);
 	console.log(ty);
@@ -1030,22 +1037,33 @@ function drawScene() {
 	console.log(txasteroide);
 	console.log(tyasteroide);
 	console.log(tzasteroide);
+	
 
 	if(tx == txasteroide && ty == tyasteroide && ((Math.abs(tz - tzasteroide)) < 0.4)){
-		console.log("bateuuuuu");
-		console.log("asteriode");
-		console.log(tx);
-		console.log(ty);
-		console.log(tz);
-		console.log("nave");
-		console.log(txasteroide);
-		console.log(tyasteroide);
-		console.log(tzasteroide);
+		score = 0;
 		window.alert("perdeu");
-		
+	}
+	*/
+	//console.log("fim");
+}
+
+function addAsteroid(mvMatrix, x, y, z) {
+	/*
+	drawModelAsteroide( angleXX2, angleYY2, angleZZ2, 
+		sx2, sy2, sz2,
+		x, y, z,
+		mvMatrix,
+		primitiveType );
+*/
+	for (i=0;i<30;i++){
+		if (asteroides[i][0]==1) {
+			drawModelAsteroide( asteroides[i][1], asteroides[i][2], asteroides[i][3], 
+				asteroides[i][4], asteroides[i][5], asteroides[i][6],
+				asteroides[i][7], asteroides[i][8], asteroides[i][9],
+				mvMatrix,
+				primitiveType );
 		}
-	
-	console.log("fim");
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -1057,13 +1075,15 @@ function drawScene() {
 
 var lastTime = 0;
 
+var elapsed = 0;
+
 function animate() {
 	
 	var timeNow = new Date().getTime();
 	
 	if( lastTime != 0 ) {
 		
-		var elapsed = timeNow - lastTime;
+		elapsed = timeNow - lastTime;
 		
 		// Global rotation
 		
@@ -1115,21 +1135,72 @@ function animate() {
 	lastTime = timeNow;
 }
 
+function processAsteroids() {
+	score++;
+	spawnCount++;
+
+	console.log(spawnTop)
+
+	if ((score % 1000 == 0) && (spawnTop > 10)) spawnTop = spawnTop-10;
+
+	for (i=0;i<30;i++){
+
+		if(asteroides[i][9] >= 3) {
+			asteroides[i][0] = 0;
+		}
+		if (asteroides[i][0] == 1) {
+			if(tx == asteroides[i][7] && ty == asteroides[i][8] && ((Math.abs(tz - asteroides[i][9])) < 0.4)){
+				
+				window.alert("perdeu");
+				reset();
+				return;
+			}
+			console.log("index: "+i);
+			console.log("Z: "+asteroides[i][9]);
+			asteroides[i][9] += elapsed / 100;
+		}
+	}
+
+	if (spawnCount >= spawnTop) {
+		spawnCount = 0;
+		if (getFreeIndex() != -1) {
+			asteroides[i][0] = 1;
+			asteroides[i][7] = (Math.floor(Math.random() * 4) * 0.5) -0.75;
+			asteroides[i][8] = (Math.floor(Math.random() * 4) * 0.5) -0.75; 
+			asteroides[i][9] = -13; 
+		}
+	}
+}
+
+function getFreeIndex() {
+	for (i=0;i<30;i++){
+		if (asteroides[i][0]==0) return i;
+	}
+	return -1;
+}
+
+
+function reset() {
+	//asteriodesMOVE_ON = 0;
+	score = 0;
+	spawnTop = 50;
+	spawnCount = 0;
+	for (i=0;i<30;i++){
+		asteroides[i][0]=0;
+	}
+	return -1;
+}
+
 
 //----------------------------------------------------------------------------
 
 // Timer
 
-cont = 0;
-
 function tick() {
 
-	if (cont == 200) {
-		//vertices = vertices + [-0.25, -0.25,  0.25];
-		//colors = colors + [1, 0, 0];
-	}
+	document.getElementById('ScoreLabel').innerHTML = score;
 
-	cont += 1;
+	if (asteriodesMOVE_ON==1) processAsteroids();
 	
 	requestAnimFrame(tick);
 	
@@ -1380,20 +1451,20 @@ function setEventListeners(){
 	};
 	
 	// Key events
-	document.addEventListener("keydown", function(event) {
+	document.addEventListener("keypress", function(event) {
 		var key = event.keyCode; // ASCII
 
 		switch(key){
-			case 37:	
+			case 97: //left ou 37/97
 				if (tx > -0.75) tx -= 0.5;
 				break;
-			case 39:
+			case 100: //right ou 39/100
 				if (tx < 0.75) tx += 0.5;
 				break;
-			case 38:
+			case 119: //up ou 38/119
 				if (ty < 0.75) ty += 0.5;	
 				break;
-			case 40:
+			case 115: //down ou 40/115
 				if (ty > -0.75) ty -= 0.5;
 				break;
 

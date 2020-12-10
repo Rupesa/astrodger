@@ -1013,14 +1013,37 @@ function drawScene() {
 		default:
 			break;
 		}
-		
+	
+	
 		
 	drawModelAsteroide( angleXX2, angleYY2, angleZZ2, 
 		sx2, sy2, sz2,
 		txasteroide, tyasteroide, tzasteroide,
 		mvMatrix,
 		primitiveType );
-	
+
+	console.log("asteriode");
+	console.log(tx);
+	console.log(ty);
+	console.log(tz);
+	console.log("nave");
+	console.log(txasteroide);
+	console.log(tyasteroide);
+	console.log(tzasteroide);
+
+	if(tx == txasteroide && ty == tyasteroide && ((Math.abs(tz - tzasteroide)) < 0.4)){
+		console.log("bateuuuuu");
+		console.log("asteriode");
+		console.log(tx);
+		console.log(ty);
+		console.log(tz);
+		console.log("nave");
+		console.log(txasteroide);
+		console.log(tyasteroide);
+		console.log(tzasteroide);
+		window.alert("perdeu");
+		
+		}
 	
 	console.log("fim");
 }
@@ -1072,7 +1095,6 @@ function animate() {
 			if(tzasteroide >=3){
 				tzasteroide = -13;
 				numAsteroide = Math.floor(Math.random() * 16);
-
 			}
 			// console.log(tzasteroide);
 		}
@@ -1647,15 +1669,13 @@ function runWebGL() {
 	
 	initWebGL( canvas );
 
-	
-
 	shaderProgram = initShaders( gl );
 	
 	setEventListeners();
 	
 	initBuffersNave();
 
-	
+	initBuffersAsteroide();
 	
 	tick();		// NEW --- A timer controls the rendering / animation    
 

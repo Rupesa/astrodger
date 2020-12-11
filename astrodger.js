@@ -1,12 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  WebGL_example_25.js 
+//  astrodger.js 
 //
-//  Phong Illumination Model on the CPU - Reading normal vectors
-//
-//  References: www.learningwebgl.com + E. Angel examples
-//
-//  J. Madeira - October 2015 + November 2017
+//  Rui Olivera
+//  Rui Santos
 //
 //////////////////////////////////////////////////////////////////////////////
 
@@ -72,60 +69,7 @@ var spawnCount = 0;
 
 var spawnTop = 50;
 
-var txasteroide = null;
-var tyasteroide = null;
-
 // The translation vector 
-
-var txasteroide0 = -0.75;
-var tyasteroide0 = 0.75;
-
-var txasteroide1 = -0.25;
-var tyasteroide1 = 0.75;
-
-var txasteroide2 = 0.25;
-var tyasteroide2 = 0.75;
-
-var txasteroide3 = 0.75;
-var tyasteroide3 = 0.75;
-
-var txasteroide4 = -0.25;
-var tyasteroide4 = 0.25;
-
-var txasteroide5 = -0.75;
-var tyasteroide5 = 0.25;
-
-var txasteroide6 = 0.25;
-var tyasteroide6 = 0.25;
-
-var txasteroide7 = 0.75;
-var tyasteroide7 = 0.25;
-
-var txasteroide8 = -0.75;
-var tyasteroide8 = -0.25;
-
-var txasteroide9 = -0.25;
-var tyasteroide9 = -0.25;
-
-var txasteroide10 = 0.25;
-var tyasteroide10 = -0.25;
-
-var txasteroide11 = 0.75;
-var tyasteroide11 = -0.25;
-
-var txasteroide12 = -0.75;
-var tyasteroide12 = -0.75;
-
-var txasteroide13 = -0.25;
-var tyasteroide13 = -0.75;
-
-var txasteroide14 = 0.25;
-var tyasteroide14 = -0.75;
-
-var txasteroide15 = 0.75;
-var tyasteroide15 = -0.75;
-
-var tzasteroide = -13;
 
 // The rotation angles in degrees
 
@@ -174,6 +118,8 @@ var rotationZZ_SPEED = 1;
 var asteriodesMOVE_ON = 0;
 
 var score = 0;
+
+var highscore = 0;
  
 // To allow choosing the way of drawing the model triangles
 
@@ -948,113 +894,13 @@ function drawScene() {
 	           tx, ty, tz,
 	           mvMatrix,
 			   primitiveType );
-
 	
 		
-	//console.log(numAsteroide);
+	addAsteroid(mvMatrix);
 
-	switch(numAsteroide){
-		case 0:	
-			txasteroide = txasteroide0;
-			tyasteroide = tyasteroide0;
-			break;
-		case 1:	
-			txasteroide = txasteroide1;
-			tyasteroide = tyasteroide1;
-			break;
-		case 2:
-			txasteroide = txasteroide2;
-			tyasteroide = tyasteroide2;
-			break;
-		case 3:	
-			txasteroide = txasteroide3;
-			tyasteroide = tyasteroide3;
-			break;
-		case 4:
-			txasteroide = txasteroide4;
-			tyasteroide = tyasteroide4;
-			break;
-		case 5:	
-			txasteroide = txasteroide5;
-			tyasteroide = tyasteroide5;
-			break;
-		case 6:
-			txasteroide = txasteroide6;
-			tyasteroide = tyasteroide6;
-			break;
-		case 7:	
-			txasteroide = txasteroide7;
-			tyasteroide = tyasteroide7;
-			break;
-		case 8:
-			txasteroide = txasteroide8;
-			tyasteroide = tyasteroide8;
-			break;
-		case 9:	
-			txasteroide = txasteroide9;
-			tyasteroide = tyasteroide9;
-			break;
-		case 10:
-			txasteroide = txasteroide10;
-			tyasteroide = tyasteroide10;
-			break;
-		case 11:	
-			txasteroide = txasteroide11;
-			tyasteroide = tyasteroide11;
-			break;
-		case 12:
-			txasteroide = txasteroide12;
-			tyasteroide = tyasteroide12;
-			break;
-		case 13:	
-			txasteroide = txasteroide13;
-			tyasteroide = tyasteroide13;
-			break;
-		case 14:
-			txasteroide = txasteroide14;
-			tyasteroide = tyasteroide14;
-			break;
-		case 15:	
-			txasteroide = txasteroide15;
-			tyasteroide = tyasteroide15;
-			break;
-
-
-		default:
-			break;
-		}
-	
-	
-		
-	addAsteroid(mvMatrix, txasteroide, tyasteroide, tzasteroide);
-
-	/*
-	console.log("asteriode");
-	console.log(tx);
-	console.log(ty);
-	console.log(tz);
-	console.log("nave");
-	console.log(txasteroide);
-	console.log(tyasteroide);
-	console.log(tzasteroide);
-	
-
-	if(tx == txasteroide && ty == tyasteroide && ((Math.abs(tz - tzasteroide)) < 0.4)){
-		score = 0;
-		window.alert("perdeu");
-	}
-	*/
-	//console.log("fim");
 }
 
-function addAsteroid(mvMatrix, x, y, z) {
-	/*
-	drawModelAsteroide( angleXX2, angleYY2, angleZZ2, 
-		sx2, sy2, sz2,
-		x, y, z,
-		mvMatrix,
-		primitiveType );
-*/
+function addAsteroid(mvMatrix) {
 	for (i=0;i<30;i++){
 		if (asteroides[i][0]==1) {
 			drawModelAsteroide( asteroides[i][1], asteroides[i][2], asteroides[i][3], 
@@ -1109,15 +955,6 @@ function animate() {
 
 			angleZZ += rotationZZ_DIR * rotationZZ_SPEED * (90 * elapsed) / 1000.0;
 		}
-		
-		if (asteriodesMOVE_ON) {
-			tzasteroide += elapsed / 100.0;
-			if(tzasteroide >=3){
-				tzasteroide = -13;
-				numAsteroide = Math.floor(Math.random() * 16);
-			}
-			// console.log(tzasteroide);
-		}
 
 		// Rotating the light sources
 	
@@ -1135,13 +972,20 @@ function animate() {
 	lastTime = timeNow;
 }
 
+var gameOver = false;
+
 function processAsteroids() {
 	score++;
 	spawnCount++;
 
-	console.log(spawnTop)
+	if (gameOver) {
+		gameOver = false;
+		window.alert("Game Over");
+				reset();
+				return;
+	}
 
-	if ((score % 1000 == 0) && (spawnTop > 10)) spawnTop = spawnTop-10;
+	if ((score % 500 == 0) && (spawnTop > 5)) spawnTop = spawnTop-5;
 
 	for (i=0;i<30;i++){
 
@@ -1149,14 +993,10 @@ function processAsteroids() {
 			asteroides[i][0] = 0;
 		}
 		if (asteroides[i][0] == 1) {
+			//Colisão
 			if(tx == asteroides[i][7] && ty == asteroides[i][8] && ((Math.abs(tz - asteroides[i][9])) < 0.4)){
-				
-				window.alert("perdeu");
-				reset();
-				return;
+				gameOver = true;
 			}
-			console.log("index: "+i);
-			console.log("Z: "+asteroides[i][9]);
 			asteroides[i][9] += elapsed / 100;
 		}
 	}
@@ -1181,13 +1021,15 @@ function getFreeIndex() {
 
 
 function reset() {
-	//asteriodesMOVE_ON = 0;
+	if(score>highscore) highscore = score;
 	score = 0;
 	spawnTop = 50;
 	spawnCount = 0;
 	for (i=0;i<30;i++){
 		asteroides[i][0]=0;
 	}
+	tx = -0.25;
+	ty = -0.25;
 	return -1;
 }
 
@@ -1199,14 +1041,14 @@ function reset() {
 function tick() {
 
 	document.getElementById('ScoreLabel').innerHTML = score;
-
-	if (asteriodesMOVE_ON==1) processAsteroids();
 	
 	requestAnimFrame(tick);
 	
 	drawScene();
 	
 	animate();
+
+	if (asteriodesMOVE_ON==1) processAsteroids();
 }
 
 
@@ -1482,6 +1324,8 @@ function setEventListeners(){
 			default:
 				break;
 			}
+
+			drawScene()
 		}
 	);   
 

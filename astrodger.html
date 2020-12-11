@@ -18,6 +18,8 @@ J. Madeira - October 2015
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
+<link rel="stylesheet" href="styles.css">
+
 <!--
 
 The simple vertex and fragment shaders.
@@ -102,115 +104,21 @@ Passing the Model-View Matrix and the Projection Matrix.
 <body onload="runWebGL();">
 
 	<div style="text-align: center">
+
+		<h1>ASTRODGER</h1>
 		
-		<p>Displaying a model read from a .txt or a .obj file</p>
+		<h3>
+			<canvas id="my-canvas" width="750" height="750"></canvas>
+		</h3>
 		
-		<canvas id="my-canvas" style="border:1px solid #000000;" width="600" height="600"></canvas>
-
-		<p>Score: 
-
-			<label id="ScoreLabel">0</label>
-
-		</p>
-
-		<p>Model XX rotation: 
-			
-		<button id="XX-on-off-button">On / Off</button>
-
-	    <button id="XX-direction-button">Change Direction</button>
-
-	    <button id="XX-slower-button">Slower</button>
-
-	    <button id="XX-faster-button">Faster</button>
-
-		</p>
-		
-		<p>Model YY rotation: 
-			
-		<button id="YY-on-off-button">On / Off</button>
-
-	    <button id="YY-direction-button">Change Direction</button>
-
-	    <button id="YY-slower-button">Slower</button>
-
-	    <button id="YY-faster-button">Faster</button>
-
-		</p>
-		
-		<p>Model ZZ rotation: 
-			
-		<button id="ZZ-on-off-button">On / Off</button>
-
-	    <button id="ZZ-direction-button">Change Direction</button>
-
-	    <button id="ZZ-slower-button">Slower</button>
-
-	    <button id="ZZ-faster-button">Faster</button>
-
-		</p>
-		
-		<p>Choose the <b>projection type</b>:
-		
-        <select id="projection-selection">
-			<option value="0">Orthogonal Projection</option>
-			<option value="1">Perspective Projection</option>
-        </select>
-        
-        </p>
-        
-        <p>Choose the <b>rendering mode</b>:
-		
-        <select id="rendering-mode-selection">
-			<option value="0">Filled Triangles</option>
-			<option value="1">Wireframe</option>
-			<option value="2">Vertices</option>
-        </select>
-        
-        <p>Read a 3D model from a <b>OBJ file</b>:
-		
-		<input type="file" id="obj-file" name="file">
-		
-		</p>
-		
-        <p>Read a 3D model from a <b>text file</b>:
-		
-		<input type="file" id="text-file" name="file">
-		
-		</p>
-		
-        <p>
-		
-		<button id="reset-button">Reset</button>
-		
-		</p>
-
-		<p> 
-			
-			<button id="move-left-button">Move Left</button>
-	
-			<button id="move-right-button">Move Right</button>
-
-		</p>
-
-			<button id="move-up-button">Move Up</button>
-
-			<button id="move-down-button">Move Down</button>
-	
-		</p>
-
-		</p>
-
-			<button id="scale-down-button">Scale Down</button>
-
-		</p>
-
-		<p>Start-asteriode-movement: 
-			
-			<button id="Start-asteriode-movement">On / Off</button>
-	
-		</p>
-
 	</div>
+
+	<p>Score: 
+		<label id="ScoreLabel">0</label>
+	</p>
+
+	<button id="Start-asteriode-movement">START GAME!</button>
+	
 
 </body>
 

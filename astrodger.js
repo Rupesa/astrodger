@@ -62,7 +62,7 @@ var sz = 0.6;
 
 var asteroides = [];
 for (i=0;i<30;i++) {
-	asteroides[i] = [0, 75, 0, 0, 0.1, 0.1, 0.1, -0.75, -0.75, -13];
+	asteroides[i] = [0, 75, 0, 0, 0.1, 0.1, 0.1, -0.75, -0.75, -13, 1, 1, 0, 1, 1, 0];
 }
 
 var spawnCount = 0;
@@ -943,7 +943,6 @@ function animate() {
 		if( rotationXX_ON ) {
 
 			angleXX += rotationXX_DIR * rotationXX_SPEED * (90 * elapsed) / 1000.0;
-			// console.log(angleXX); 
 	    }
 
 		if( rotationYY_ON ) {
@@ -997,10 +996,13 @@ function processAsteroids() {
 			if(tx == asteroides[i][7] && ty == asteroides[i][8] && ((Math.abs(tz - asteroides[i][9])) < 0.4)){
 				gameOver = true;
 			}
+			//Speed and Spin
 			asteroides[i][9] += elapsed / 100;
+			asteroides[i][1] += asteroides[i][10] * asteroides[i][13] * (90 * elapsed) / 1000.0;
+			asteroides[i][2] += asteroides[i][11] * asteroides[i][14] * (90 * elapsed) / 1000.0;
 		}
 	}
-
+	//New Asteroid
 	if (spawnCount >= spawnTop) {
 		spawnCount = 0;
 		if (getFreeIndex() != -1) {
@@ -1008,6 +1010,14 @@ function processAsteroids() {
 			asteroides[i][7] = (Math.floor(Math.random() * 4) * 0.5) -0.75;
 			asteroides[i][8] = (Math.floor(Math.random() * 4) * 0.5) -0.75; 
 			asteroides[i][9] = -13; 
+			var x = (Math.floor(Math.random() * 2));
+			if (x == 0) x = -1;
+			var y = (Math.floor(Math.random() * 2));
+			if (y == 0) y = -1;
+			asteroides[i][10] = x;
+			asteroides[i][11] = y;
+			asteroides[i][13] = (Math.floor(Math.random() * 6) + 1) / 5;
+			asteroides[i][14] = (Math.floor(Math.random() * 6) + 1) / 5;
 		}
 	}
 }

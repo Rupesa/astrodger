@@ -338,6 +338,17 @@ var colors = [
 		 0.50,  0.35,  0.35,			 			 
 ];
 
+var normals = [
+
+		// FRONTAL TRIANGLE
+		 
+		 0.0,  0.0,  1.0,
+		 
+		 0.0,  0.0,  1.0,
+		 
+		 0.0,  0.0,  1.0,
+];
+
 var verticesAsteroide = [
 
 	// FRONT FACE
@@ -395,17 +406,15 @@ var colorsAsteroide = [
 		 
 ];
 
+var normalsAsteroide = [
 
-
-var normals = [
-
-		// FRONTAL TRIANGLE
-		 
-		 0.0,  0.0,  1.0,
-		 
-		 0.0,  0.0,  1.0,
-		 
-		 0.0,  0.0,  1.0,
+	// FRONTAL TRIANGLE
+	 
+	 0.0,  0.0,  1.0,
+	 
+	 0.0,  0.0,  1.0,
+	 
+	 0.0,  0.0,  1.0,
 ];
 
 // Initial color values just for testing!!
@@ -491,15 +500,15 @@ function initBuffersAsteroide() {
 
 //  Computing the illumination and rendering the model
 
-function computeIllumination( mvMatrix ) {
+function computeIllumination( mvMatrix, v, c, n ) {
 
 	// Phong Illumination Model
 	
 	// Clearing the colors array
 	
-	for( var i = 0; i < colors.length; i++ )
+	for( var i = 0; i < c.length; i++ )
 	{
-		colors[i] = 0.0;
+		c[i] = 0.0;
 	}
 	
     // SMOOTH-SHADING 
@@ -508,15 +517,15 @@ function computeIllumination( mvMatrix ) {
 
     // Iterate through the vertices
     
-    for( var vertIndex = 0; vertIndex < vertices.length; vertIndex += 3 )
+    for( var vertIndex = 0; vertIndex < v.length; vertIndex += 3 )
     {	
 		// For every vertex
 		
 		// GET COORDINATES AND NORMAL VECTOR
 		
-		var auxP = vertices.slice( vertIndex, vertIndex + 3 );
+		var auxP = v.slice( vertIndex, vertIndex + 3 );
 		
-		var auxN = normals.slice( vertIndex, vertIndex + 3 );
+		var auxN = n.slice( vertIndex, vertIndex + 3 );
 
         // CONVERT TO HOMOGENEOUS COORDINATES
 
@@ -670,34 +679,35 @@ function computeIllumination( mvMatrix ) {
 	        
 	        var tempB = ambientTerm[2] + diffuseTerm[2] * cosNL + specularTerm[2] * Math.pow(cosNH, nPhong);
 	        
-			colors[vertIndex] += tempR;
+			c[vertIndex] += tempR;
 	        
 	        // Avoid exceeding 1.0
 	        
-			if( colors[vertIndex] > 1.0 ) {
+			if( c[vertIndex] > 1.0 ) {
 				
-				colors[vertIndex] = 1.0;
+				c[vertIndex] = 1.0;
 			}
 	        
 	        // Avoid exceeding 1.0
 	        
-			colors[vertIndex + 1] += tempG;
+			c[vertIndex + 1] += tempG;
 			
-			if( colors[vertIndex + 1] > 1.0 ) {
+			if( c[vertIndex + 1] > 1.0 ) {
 				
-				colors[vertIndex + 1] = 1.0;
+				c[vertIndex + 1] = 1.0;
 			}
 			
-			colors[vertIndex + 2] += tempB;
+			c[vertIndex + 2] += tempB;
 	        
 	        // Avoid exceeding 1.0
 	        
-			if( colors[vertIndex + 2] > 1.0 ) {
+			if( c[vertIndex + 2] > 1.0 ) {
 				
-				colors[vertIndex + 2] = 1.0;
+				c[vertIndex + 2] = 1.0;
 			}
 	    }	
 	}
+
 }
 
 function drawModelNave( angleXX, angleYY, angleZZ, 
@@ -730,7 +740,7 @@ function drawModelNave( angleXX, angleYY, angleZZ,
 	
 	// NEW - Aux. Function for computing the illumination
 	//coco
-	//computeIllumination( mvMatrix );
+	computeIllumination( mvMatrix, vertices, colors, normals );
 	
 	// Associating the data to the vertex shader
 	
@@ -794,7 +804,7 @@ function drawModelAsteroide( angleXX2, angleYY2, angleZZ2,
 
 	// NEW - Aux. Function for computing the illumination
 	//coco
-	//computeIllumination( mvMatrix );
+	//computeIllumination( mvMatrix, verticesAsteroide, colorsAsteroide, normalsAsteroide );
 
 	// Associating the data to the vertex shader
 
@@ -1144,6 +1154,160 @@ function setEventListeners(){
 		}  
 	};
 
+	document.getElementById("obj-file").onchange = function(){
+		
+		var file = this.files[0];
+		
+		var reader = new FileReader();
+		
+		reader.onload = function( progressEvent ){
+			
+			// Entire file read as a string
+			
+			// The file lines
+			
+			var lines = this.result.split('\n');
+			
+			// The new vertices
+			
+			var newVertices = [];
+			
+			// The new normal vectors
+			
+			var newNormals = [];
+			
+			// Check every line and store 
+    
+			for(var line = 0; line < lines.length; line++){
+      
+				// The tokens/values in each line
+    
+			    // Separation between tokens is 1 or mode whitespaces
+    
+			    var tokens = lines[line].split(/\s\s*/);
+			    
+			    // Array of tokens; each token is a string
+			    
+			    if( tokens[0] == "v" ) 
+			    {
+					// For every vertex we have 3 floating point values
+			
+				    for( j = 1; j < 4; j++ ) {
+					
+						newVertices.push( parseFloat( tokens[ j ] ) );
+					}
+				}
+
+			    if( tokens[0] == "vn" ) 
+			    {
+					// For every normal we have 3 floating point values
+			
+				    for( j = 1; j < 4; j++ ) {
+					
+						newNormals.push( parseFloat( tokens[ j ] ) );
+					}
+				}
+			}	
+						
+			// Assigning to the current model
+			
+			vertices = newVertices.slice();
+			
+			normals = newNormals.slice();
+			
+			// Checking to see if the normals are defined on the file
+			
+			if( normals.length == 0 )
+			{
+				computeVertexNormals( vertices, normals );
+			}
+						
+			// To render the model just read
+		
+			initBuffers();
+
+			// RESET the transformations - NEED AUXILIARY FUNCTION !!
+			
+			tx = ty = tz = 0.0;
+						
+			angleXX = angleYY = angleZZ = 0.0;
+			
+			sx = sy = sz = 0.03;
+		};
+		
+		// Entire file read as a string
+			
+		reader.readAsText( file );		
+	}
+
+	// Text file loading
+	
+	// Adapted from:
+	
+	// http://stackoverflow.com/questions/23331546/how-to-use-javascript-to-read-local-text-file-and-read-line-by-line
+	
+	document.getElementById("text-file").onchange = function(){
+		
+		var file = this.files[0];
+		
+		var reader = new FileReader();
+		
+		reader.onload = function( progressEvent ){
+			
+			// Entire file read as a string
+			
+			// The tokens/values in the file
+    
+			// Separation between values is 1 or mode whitespaces
+    
+			var tokens = this.result.split(/\s\s*/);
+    
+			// Array of values; each value is a string
+			
+			var numVertices = parseInt( tokens[0] );
+			
+			// For every vertex we have 3 floating point values
+			
+			var i, j;
+			
+			var aux = 1;
+			
+			var newVertices = [];
+			
+			for( i = 0; i < numVertices; i++ ) {
+			
+				for( j = 0; j < 3; j++ ) {
+					
+					newVertices[ 3 * i + j ] = parseFloat( tokens[ aux++ ] );
+				}
+			}
+					
+			// Assigning to the current model
+			
+			vertices = newVertices.slice();
+			
+			// NEW --- Computing the triangle normal vector for every vertex
+			
+			computeVertexNormals( vertices, normals );
+			
+			// To render the model just read
+		
+			initBuffers();
+
+			// RESET the transformations - NEED AUXILIARY FUNCTION !!
+			
+			tx = ty = tz = 0.0;
+						
+			angleXX = angleYY = angleZZ = 0.0;
+			
+			sx = sy = sz = 0.02;
+		};
+		
+		// Entire file read as a string
+			
+		reader.readAsText( file );		
+	}
+
 }
 
 //----------------------------------------------------------------------------
@@ -1182,7 +1346,11 @@ function initWebGL( canvas ) {
 
 		// Enable DEPTH-TEST
 		
-		gl.enable( gl.DEPTH_TEST );        
+		gl.enable( gl.DEPTH_TEST );     
+		
+		computeVertexNormals( vertices, normals );
+		computeVertexNormals( verticesAsteroide, normalsAsteroide );
+
 	} catch (e) {
 	}
 	if (!gl) {

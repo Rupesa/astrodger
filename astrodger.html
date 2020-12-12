@@ -103,23 +103,16 @@ Passing the Model-View Matrix and the Projection Matrix.
 
 <body onload="runWebGL();">
 
-	<div style="text-align: center">
-
-		<h1>ASTRODGER</h1>
-		
-		<h3>
-			<canvas id="my-canvas" width="750" height="750"></canvas>
-		</h3>
-		
+	<div class="myDiv">
+		<p color= "">SCORE: <label id="ScoreLabel">0</label> </p>
+		<button id="Start-asteriode-movement">START / PAUSE</button>
 	</div>
 
-	<p>Score: 
-		<label id="ScoreLabel">0</label>
-	</p>
-
-	<button id="Start-asteriode-movement">START GAME!</button>
+	<div style="text-align: center">
+		<h1>ASTRODGER</h1>
+		<canvas id="my-canvas" style="border:2px solid #ffffff;" width="750" height="750"></canvas>
+	</div>
 	
-
 </body>
 
 </html>

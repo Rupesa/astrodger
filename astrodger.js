@@ -804,7 +804,7 @@ function drawModelAsteroide( angleXX2, angleYY2, angleZZ2,
 
 	// NEW - Aux. Function for computing the illumination
 	//coco
-	//computeIllumination( mvMatrix, verticesAsteroide, colorsAsteroide, normalsAsteroide );
+	// computeIllumination( mvMatrix, verticesAsteroide, colorsAsteroide, normalsAsteroide );
 
 	// Associating the data to the vertex shader
 
@@ -907,6 +907,8 @@ function drawScene() {
 	
 		
 	addAsteroid(mvMatrix);
+
+	computeIllumination( mvMatrix, verticesAsteroide, colorsAsteroide, normalsAsteroide );
 
 }
 

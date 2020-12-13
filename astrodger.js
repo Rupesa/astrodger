@@ -417,12 +417,17 @@ function animate() {
 	
 		for(var i = 0; i < lightSources.length; i++ )
 	    {
+			/*
 			if( lightSources[i].isRotYYOn() ) {
-
 				var angle = lightSources[i].getRotAngleYY() + lightSources[i].getRotationSpeed() * (90 * elapsed) / 1000.0;
 		
 				lightSources[i].setRotAngleYY( angle );
 			}
+			*/
+
+			var z = lightSources[i].getPosition()[2] + elapsed / 1000;
+
+			lightSources[i].setPosition( lightSources[i].getPosition()[0], lightSources[i].getPosition()[1], z,lightSources[i].getPosition()[3]);
 		}
 }
 	
@@ -452,7 +457,7 @@ function processAsteroids() {
 		}
 		if (sceneModels[i+1].isActive) {
 			//Colisão
-			if(sceneModels[0].tx == sceneModels[i+1].tx && sceneModels[0].ty == sceneModels[i+1].ty && ((Math.abs(sceneModels[0].tz - sceneModels[i+1].tz)) < 0.4)){
+			if(sceneModels[0].tx == sceneModels[i+1].tx && sceneModels[0].ty == sceneModels[i+1].ty && ((Math.abs(sceneModels[0].tz - sceneModels[i+1].tz)) < 0.6)){
 				gameOver = true;
 			}
 			//Speed and Spin
@@ -508,6 +513,8 @@ function reset() {
 // Timer
 
 function tick() {
+
+	document.getElementById('ScoreLabel').innerHTML = score;
 	
 	requestAnimFrame(tick);
 	

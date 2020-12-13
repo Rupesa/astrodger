@@ -52,7 +52,7 @@ function emptyModelFeatures() {
 	
 	this.rotYYOn = true;
 	
-	this.rotZZOn = true;
+	this.rotZZOn = false;
 	
 	this.rotXXSpeed = 1.0;
 	
@@ -68,13 +68,13 @@ function emptyModelFeatures() {
 	
 	// Material features
 	
-	this.kAmbi = [ 0.2, 0.2, 0.2 ];
+	this.kAmbi = [ 1, 1, 1 ];
 	
-	this.kDiff = [ 0.7, 0.7, 0.7 ];
+	this.kDiff = [ 1, 1, 1 ];
 
-	this.kSpec = [ 0.7, 0.7, 0.7 ];
+	this.kSpec = [ 1, 1, 1 ];
 
-	this.nPhong = 100;
+	this.nPhong = 1000;
 
 	// Control
 
@@ -252,6 +252,8 @@ sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.15;
 
 sceneModels[0].isActive = true;
 
+sceneModels[0].rotXXOn = sceneModels[0].rotYYOn = false;
+
 // Model 2 --- Bottom Right
 
 // sceneModels.push( new tetrahedronModel( 1 ) );
@@ -299,6 +301,74 @@ sceneModels[5].sx = 0.2; sceneModels[5].sy = 0.2; sceneModels[5].sz = 0.2;
 sceneModels.push(new sphereModel(1));
 sceneModels[6].sx = 0.2; sceneModels[6].sy = 0.2; sceneModels[6].sz = 0.2;
 
+sceneModels.push(new sphereModel(1));
+sceneModels[7].sx = 0.2; sceneModels[7].sy = 0.2; sceneModels[7].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[8].sx = 0.2; sceneModels[8].sy = 0.2; sceneModels[8].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[9].sx = 0.2; sceneModels[9].sy = 0.2; sceneModels[9].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[10].sx = 0.2; sceneModels[10].sy = 0.2; sceneModels[10].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[11].sx = 0.2; sceneModels[11].sy = 0.2; sceneModels[11].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[12].sx = 0.2; sceneModels[12].sy = 0.2; sceneModels[12].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[13].sx = 0.2; sceneModels[13].sy = 0.2; sceneModels[13].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[14].sx = 0.2; sceneModels[14].sy = 0.2; sceneModels[14].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[15].sx = 0.2; sceneModels[15].sy = 0.2; sceneModels[15].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[16].sx = 0.2; sceneModels[16].sy = 0.2; sceneModels[16].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[17].sx = 0.2; sceneModels[17].sy = 0.2; sceneModels[17].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[18].sx = 0.2; sceneModels[18].sy = 0.2; sceneModels[18].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[19].sx = 0.2; sceneModels[19].sy = 0.2; sceneModels[19].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[20].sx = 0.2; sceneModels[20].sy = 0.2; sceneModels[20].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[21].sx = 0.2; sceneModels[21].sy = 0.2; sceneModels[21].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[22].sx = 0.2; sceneModels[22].sy = 0.2; sceneModels[22].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[23].sx = 0.2; sceneModels[23].sy = 0.2; sceneModels[23].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[24].sx = 0.2; sceneModels[24].sy = 0.2; sceneModels[24].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[25].sx = 0.2; sceneModels[25].sy = 0.2; sceneModels[25].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[26].sx = 0.2; sceneModels[26].sy = 0.2; sceneModels[26].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[27].sx = 0.2; sceneModels[27].sy = 0.2; sceneModels[27].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[28].sx = 0.2; sceneModels[28].sy = 0.2; sceneModels[28].sz = 0.2;
+
+sceneModels.push(new sphereModel(1));
+sceneModels[29].sx = 0.2; sceneModels[29].sy = 0.2; sceneModels[29].sz = 0.2;
 
 
 

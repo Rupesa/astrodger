@@ -168,7 +168,7 @@ var lightSources = [];
 
 lightSources.push( new LightSource() );
 
-lightSources[0].setPosition( -5.0, -5.0, -10.0, 0.0 );
+lightSources[0].setPosition( -1.0, 1.0, 1.0, 0.0 );
 
 lightSources[0].setIntensity( 1.0, 0.0, 0.0 );
 
@@ -182,7 +182,7 @@ lightSources[0].setRotationSpeed( 1.0 );
 
 lightSources.push( new LightSource() );
 
-lightSources[1].setPosition( 5.0, 5.0, -5.0, 1.0 );
+lightSources[1].setPosition( 10.0, 10.0, 10.0, 1.0 );
 
 lightSources[1].setIntensity( 0.0, 0.0, 1.0 );
 
@@ -191,59 +191,4 @@ lightSources[1].setAmbIntensity( 0.0, 0.0, 0.2 );
 lightSources[1].switchRotYYOn();
 
 lightSources[1].setRotationSpeed( -0.5 );
-
-// Light source 2
-
-lightSources.push( new LightSource() );
-
-lightSources[2].setPosition( 0.0, 10.0, -20.0, 1.0 );
-
-lightSources[2].setIntensity( 1.0, 1.0, 1.0 );
-
-lightSources[2].setAmbIntensity( 0.0, 0.0, 0.2 );
-
-lightSources[2].switchRotYYOn();
-
-lightSources[2].setRotationSpeed( 0 );
-
-
-lightSources.push( new LightSource() );
-
-lightSources[3].setPosition( 0.0, -10.0, -50.0, 1.0 );
-
-lightSources[3].setIntensity( 0.0, 0.2, 0.3 );
-
-lightSources[3].setAmbIntensity( 0.0, 0.0, 0.2 );
-
-lightSources[3].switchRotYYOn();
-
-lightSources[3].setRotationSpeed( 0 );
-
-
-lightSources.push( new LightSource() );
-
-lightSources[4].setPosition( 2.0, 5.0, -70.0, 1.0 );
-
-lightSources[4].setIntensity( 0.4, 0.0, 0.1 );
-
-lightSources[4].setAmbIntensity( 0.0, 0.0, 0.2 );
-
-lightSources[4].switchRotYYOn();
-
-lightSources[4].setRotationSpeed( 0 );
-
-
-lightSources.push( new LightSource() );
-
-lightSources[5].setPosition( -6.0, 7.0, -80.0, 1.0 );
-
-lightSources[5].setIntensity( 0.2, 0.4, 0.0 );
-
-lightSources[5].setAmbIntensity( 0.0, 0.0, 0.2 );
-
-lightSources[5].switchRotYYOn();
-
-lightSources[5].setRotationSpeed( 0 );
-
-
 

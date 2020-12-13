@@ -25,17 +25,17 @@ button {
   background-color: #ffffff; /* Green */
   border: none;
   color: rgb(32, 14, 136);
-  padding: 10px 32px;
+  padding: 7px 25px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 30px;
+  font-size: 20px;
   border-radius: 8px;
 }
 
 p{
   font-family: Helvetica;
-  font-size: 30px;
+  font-size: 20px;
   color: rgb(255, 255, 255);
 }
 

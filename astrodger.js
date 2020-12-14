@@ -32,7 +32,7 @@ var globalTz = 0;
 
 // GLOBAL Animation controls
 
-var globalRotationYY_ON = 0;
+var globalRotationYY_ON = 1;
 
 var globalRotationYY_DIR = 1;
 
@@ -163,7 +163,9 @@ function drawModel( model,
 	// Concatenate with the particular model transformations
 	
     // Pay attention to transformation order !!
-    
+	
+	//mvMatrix = mult( mvMatrix, rotationYYMatrix( globalAngleYY ) );
+	
 	mvMatrix = mult( mvMatrix, translationMatrix( model.tx, model.ty, model.tz ) );
 						 
 	mvMatrix = mult( mvMatrix, rotationZZMatrix( model.rotAngleZZ ) );
@@ -324,6 +326,7 @@ function drawScene() {
 	// GLOBAL TRANSFORMATION FOR THE WHOLE SCENE
 	
 	mvMatrix = translationMatrix( 0, 0, globalTz );
+	//mvMatrix = mult(mvMatrix, rotationYYMatrix(globalAngleYY));
 	
 	// NEW - Updating the position of the light sources, if required
 	
@@ -525,6 +528,53 @@ function reset() {
 	ty = -0.25;
 	return -1;
 }
+
+
+/*
+var mouseDown = false;
+
+var lastMouseX = null;
+
+var lastMouseY = null;
+
+function handleMouseDown(event) {
+	
+    mouseDown = true;
+  
+  
+    lastMouseY = globalAngleYY;
+}
+
+function handleMouseUp(event) {
+
+    mouseDown = false;
+}
+
+function handleMouseMove(event) {
+
+    if (!mouseDown) {
+	  
+      return;
+    } 
+  
+    // Rotation angles proportional to cursor displacement
+    
+  
+    var newY = globalAngleYY;
+
+    //var deltaX = newX - lastMouseX;
+    //mvMatrix = mult(mvMatrix, rotationYYMatrix(globalAngleYY));
+    //angleXX += radians( 10 * deltaX  )
+
+    var deltaY = newY - lastMouseY;
+    
+    globalAngleYY += radians( 10 * deltaY  );
+    
+    lastMouseX = newX;
+    
+    lastMouseY = newY;
+  }
+  */
 
 //----------------------------------------------------------------------------
 
@@ -814,7 +864,17 @@ function setEventListeners(){
 			}
 		}
 		
-	);   
+	); 
+	
+	var x = 0;
+	var y = 0;
+
+	document.getElementById("my-canvas").addEventListener('click', e => {
+		x = e.offsetX;
+		y = e.offsetY;
+		sceneModels[0].tx = (parseInt(x/150) * 0.5)-0.75;
+		sceneModels[0].ty = -(parseInt(y/150) * 0.5)+0.75;
+	});
 	
 	document.getElementById("Start-asteriode-movement").onclick = function(){
 		document.getElementById("Start-asteriode-movement").style.display = "none";

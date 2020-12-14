@@ -38,6 +38,10 @@ var globalRotationYY_DIR = 1;
 
 var globalRotationYY_SPEED = 1;
 
+var pauseMODE = 0;
+
+var justStarted = 1;
+
 // To allow choosing the way of drawing the model triangles
 
 var primitiveType = null;
@@ -73,6 +77,8 @@ var spawnTop = 50;
 var score = 0;
 
 var highscore = 0;
+
+var nivel = 0;
 
 var asteriodesMOVE_ON = 0;
 
@@ -414,21 +420,25 @@ function animate() {
 		}
 		
 		// Rotating the light sources
-	
-		for(var i = 0; i < lightSources.length; i++ )
-	    {
-			/*
-			if( lightSources[i].isRotYYOn() ) {
-				var angle = lightSources[i].getRotAngleYY() + lightSources[i].getRotationSpeed() * (90 * elapsed) / 1000.0;
 		
-				lightSources[i].setRotAngleYY( angle );
+		if(pauseMODE==0 && justStarted==0){
+			for(var i = 0; i < lightSources.length; i++ )
+			{
+				
+				// if( lightSources[i].isRotYYOn() ) {
+				// 	var angle = lightSources[i].getRotAngleYY() + lightSources[i].getRotationSpeed() * (90 * elapsed) / 1000.0;
+			
+				// 	lightSources[i].setRotAngleYY( angle );
+				// }
+				
+
+				var z = lightSources[i].getPosition()[2] + elapsed / 1000;
+
+				lightSources[i].setPosition( lightSources[i].getPosition()[0], lightSources[i].getPosition()[1], z,lightSources[i].getPosition()[3]);
 			}
-			*/
-
-			var z = lightSources[i].getPosition()[2] + elapsed / 1000;
-
-			lightSources[i].setPosition( lightSources[i].getPosition()[0], lightSources[i].getPosition()[1], z,lightSources[i].getPosition()[3]);
 		}
+
+		
 }
 	
 	lastTime = timeNow;
@@ -441,7 +451,15 @@ function processAsteroids() {
 
 	if (gameOver) {
 		gameOver = false;
-		window.alert("Game Over");
+		// window.alert("Game Over");
+		
+		
+		document.getElementById("Pause-asteriode-movement").style.display = "none";
+		document.getElementById("Restart-asteriode-movement").style.display = "block";
+		document.getElementById("gameover").style.display = "block";
+		
+		asteriodesMOVE_ON = 0;
+		pauseMODE = 1;
 				reset();
 				return;
 	}
@@ -462,8 +480,8 @@ function processAsteroids() {
 			}
 			//Speed and Spin
 			sceneModels[i+1].tz += elapsed / 100;
-			sceneModels[i+1].rotAngleXX += sceneModels[i+1].rotXXDir * sceneModels[i+1].rotXXSpeed * (90 * elapsed) / 1000.0;
-			sceneModels[i+1][2] += sceneModels[i+1].rotYYDir * sceneModels[i+1].rotYYSpeed * (90 * elapsed) / 1000.0;
+			// sceneModels[i+1].rotAngleXX += sceneModels[i+1].rotXXDir * sceneModels[i+1].rotXXSpeed * (90 * elapsed) / 1000.0;
+			// sceneModels[i+1].rotYYDir += sceneModels[i+1].rotYYDir * sceneModels[i+1].rotYYSpeed * (90 * elapsed) / 1000.0;
 		}
 	}
 	//New Asteroid
@@ -515,6 +533,9 @@ function reset() {
 function tick() {
 
 	document.getElementById('ScoreLabel').innerHTML = score;
+	document.getElementById('HighScoreLabel').innerHTML = highscore;
+	nivel = Math.floor((score)/500)+1;
+	document.getElementById('Nivel').innerHTML = nivel;
 	
 	requestAnimFrame(tick);
 	
@@ -756,55 +777,84 @@ function setEventListeners(){
 	
 	// Key events
 	document.addEventListener("keypress", function(event) {
-		var key = event.keyCode; // ASCII
 
-		switch(key){
-			case 97: //left ou 37/97
-				if (sceneModels[0].tx > -0.75) sceneModels[0].tx -= 0.5;
-				break;
-			case 100: //right ou 39/100
-				if (sceneModels[0].tx < 0.75) sceneModels[0].tx += 0.5;
-				break;
-			case 119: //up ou 38/119
-				if (sceneModels[0].ty < 0.75) sceneModels[0].ty += 0.5;	
-				break;
-			case 115: //down ou 40/115
-				if (sceneModels[0].ty > -0.75) sceneModels[0].ty -= 0.5;
-				break;
+		if(pauseMODE==0){
+			var key = event.keyCode; // ASCII
 
-			case 187:
-				scale_up()
-				break;
-			case 189:
-				scale_down()
-				break;
+			switch(key){
+				case 97: //left ou 37/97
+					if (sceneModels[0].tx > -0.75) sceneModels[0].tx -= 0.5;
+					break;
+				case 100: //right ou 39/100
+					if (sceneModels[0].tx < 0.75) sceneModels[0].tx += 0.5;
+					break;
+				case 119: //up ou 38/119
+					if (sceneModels[0].ty < 0.75) sceneModels[0].ty += 0.5;	
+					break;
+				case 115: //down ou 40/115
+					if (sceneModels[0].ty > -0.75) sceneModels[0].ty -= 0.5;
+					break;
 
-			case 82:
-				reset()
-				break;
+				case 187:
+					scale_up()
+					break;
+				case 189:
+					scale_down()
+					break;
 
-			default:
-				break;
+				case 82:
+					reset()
+					break;
+
+				default:
+					break;
+				}
+
+				drawScene()
 			}
-
-			drawScene()
 		}
+		
 	);   
 	
 	document.getElementById("Start-asteriode-movement").onclick = function(){
-		
-		// Switching on / off
-		
-		if( asteriodesMOVE_ON ) {
-			
-			asteriodesMOVE_ON = 0;
-		}
-		else {
-			
-			asteriodesMOVE_ON = 1;
-		}  
+		document.getElementById("Start-asteriode-movement").style.display = "none";
+		document.getElementById("Pause-asteriode-movement").style.display = "block";
+		justStarted = 0;
+		pauseMODE = 0;
+		asteriodesMOVE_ON = 1;
 	};
+
+	document.getElementById("Pause-asteriode-movement").onclick = function(){
+		document.getElementById("Pause-asteriode-movement").style.display = "none";
+		document.getElementById("Restart-asteriode-movement").style.display = "block";
+		document.getElementById("Resume-asteriode-movement").style.display = "block";
+		asteriodesMOVE_ON = 0;
+		pauseMODE = 1;
+	};
+
+	document.getElementById("Resume-asteriode-movement").onclick = function(){
+		document.getElementById("Resume-asteriode-movement").style.display = "none";
+		document.getElementById("Restart-asteriode-movement").style.display = "none";
+		document.getElementById("Pause-asteriode-movement").style.display = "block";
+		asteriodesMOVE_ON = 1;
+		pauseMODE = 0;
+	};
+
+	document.getElementById("Restart-asteriode-movement").onclick = function(){
+		document.getElementById("Restart-asteriode-movement").style.display = "none";
+		document.getElementById("Resume-asteriode-movement").style.display = "none";
+		document.getElementById("Pause-asteriode-movement").style.display = "block";
+		document.getElementById("gameover").style.display = "none";
+		pauseMODE = 0;
+		reset();
+		asteriodesMOVE_ON = 1;
+		lightSources[0].setPosition( -2.0, -2.0, -2.0, 0.0 );
+		lightSources[1].setPosition( 5.0, 5.0, -50.0, 1.0 );
+	};
+
+
 }
+
 
 //----------------------------------------------------------------------------
 //

@@ -13,29 +13,89 @@ h1 {
   font-size: 50px;
 }
 
-.myDiv {
-  position: fixed;
-  font-family: Helvetica;
-  font-size: 30px;
-  margin-top: 70px;
-  margin-left: 150px;
-}
-
 button {
-  background-color: #ffffff; /* Green */
+  background-color: #ffffff; 
   border: none;
   color: rgb(32, 14, 136);
-  padding: 7px 25px;
+  width: 250px;
+  height: 40px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 20px;
   border-radius: 8px;
+  margin-left: 350px;
+  font-family: Helvetica;
+  position: fixed;
 }
 
-p{
+#Start-asteriode-movement {
+  margin-top: 90px;
+}
+
+#Pause-asteriode-movement {
+  margin-top: 90px;
+  display:none;
+}
+
+#Restart-asteriode-movement {
+  margin-top: 140px;
+  display:none;
+}
+
+#Resume-asteriode-movement {
+  margin-top: 90px;
+  display:none;
+}
+
+#score{
   font-family: Helvetica;
   font-size: 20px;
   color: rgb(255, 255, 255);
+  position:fixed;
+  margin-top: 90px;
+  text-align: right;
+  margin-left: 1300px;
 }
 
+#highscore{
+  font-family: Helvetica;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  position:fixed;
+  margin-top: 120px;
+  text-align: right;
+  margin-left: 1300px;
+}
+
+#nivel{
+  font-family: Helvetica;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  position:fixed;
+  margin-top: 150px;
+  text-align: right;
+  margin-left: 1300px;
+}
+
+
+#gameover{
+  
+  font-family: Helvetica;
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  position:fixed;
+  margin-top: 720px;
+  text-align: center;
+  margin-left: 855px;
+  display:none;
+}
+
+#controls{
+  font-family: Helvetica;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  position:fixed;
+  margin-top: 250px;
+  text-align: left;
+  margin-left: 1300px;
+}

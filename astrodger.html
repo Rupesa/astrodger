@@ -16,7 +16,7 @@ J. Madeira - November 2017 + November 2018
 
 -->
 	
-<title>ASTRODGER &mdash; Several Light Sources - GPU - Per Vertex Shading</title>
+<title>ASTRODGER</title>
 
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
@@ -238,17 +238,26 @@ The fragment shader is the same simple one.
 
 <body onload="runWebGL();">
 
-	<div class="myDiv">
-		<p color= "">SCORE: <label id="ScoreLabel">0</label> </p>
-		<button id="Start-asteriode-movement">START / PAUSE</button>
-	</div>
+	
+	<p id="score">SCORE: <label id="ScoreLabel">0</label> </p>
+	<p id="highscore">HIGHEST SCORE: <label id="HighScoreLabel">0</label> </p>
+	<p id="nivel">LEVEL: <label id="Nivel">0</label> </p>
+	<p id="gameover">GAME OVER!<label id="GameOverLabel"></label> </p>
+	<p id="controls">CONTROLS:<br> W - UP <br> A - LEFT <br> S - DOWN <br> D - RIGHT <br>  </p>
+	<button onclick="myFunctionStart()" id="Start-asteriode-movement">START</button>
+	<button onclick="myFunctionPause()" id="Pause-asteriode-movement">PAUSE</button>
+	<button onclick="myFunctionResume()" id="Resume-asteriode-movement">RESUME</button>
+	<button onclick="myFunctionRestart()" id="Restart-asteriode-movement">RESTART</button>
 
 	<div style="text-align: center">
 		<h1>ASTRODGER</h1>
 		<canvas id="my-canvas" style="border:2px solid #ffffff;" width="600" height="600"></canvas>
 	</div>
 
-	<p>Read a 3D model from a <b>OBJ file</b>:
+	
+
+
+	<!-- <p>Read a 3D model from a <b>OBJ file</b>:
 		
 	<input type="file" id="obj-file" name="file">
 	
@@ -258,8 +267,7 @@ The fragment shader is the same simple one.
 	
 	<input type="file" id="text-file" name="file">
 	
-	</p>
-
+	</p> -->
 	
 </body>
 

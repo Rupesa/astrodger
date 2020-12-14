@@ -17,15 +17,15 @@ button {
   background-color: #ffffff; 
   border: none;
   color: rgb(32, 14, 136);
-  width: 250px;
+  width: 240px;
   height: 40px;
   text-align: center;
   text-decoration: none;
   font-size: 20px;
   border-radius: 8px;
-  margin-left: 350px;
   font-family: Helvetica;
   position: fixed;
+  margin-left: 12%;
 }
 
 #Start-asteriode-movement {
@@ -54,7 +54,7 @@ button {
   position:fixed;
   margin-top: 90px;
   text-align: right;
-  margin-left: 1300px;
+  margin-left: 72%;
 }
 
 #highscore{
@@ -64,7 +64,7 @@ button {
   position:fixed;
   margin-top: 120px;
   text-align: right;
-  margin-left: 1300px;
+  margin-left: 72%;
 }
 
 #nivel{
@@ -74,7 +74,7 @@ button {
   position:fixed;
   margin-top: 150px;
   text-align: right;
-  margin-left: 1300px;
+  margin-left: 72%;
 }
 
 
@@ -97,5 +97,5 @@ button {
   position:fixed;
   margin-top: 250px;
   text-align: left;
-  margin-left: 1300px;
+  margin-left: 72%;
 }

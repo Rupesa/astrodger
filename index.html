@@ -75,7 +75,13 @@ The fragment shader is the same simple one.
 	
 	uniform vec3 k_specular;
 	
-    uniform float shininess;
+	uniform float shininess;
+
+	// attribute vec3 aVertexPosition;
+
+	attribute vec2 aTextureCoord;
+	
+	varying vec2 vTextureCoord;
         
     void main(void) {
 		
@@ -87,7 +93,11 @@ The fragment shader is the same simple one.
 		
 		// And multiplying by the Projection and the Model-View matrix
 		
-        gl_Position = uPMatrix * uMVMatrix * vec4(vPosition, 1.0);
+		gl_Position = uPMatrix * uMVMatrix * vec4(vPosition, 1.0);
+		
+		// gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+
+		vTextureCoord = aTextureCoord;
         
         // Phong Illumination Model
         
@@ -185,7 +195,9 @@ The fragment shader is the same simple one.
 
 		   // Adding the components
 		
-           fColor += diffuse + specular;
+		   fColor += diffuse + specular;
+		   
+		   
 	   }
 	}
     
@@ -196,12 +208,18 @@ The fragment shader is the same simple one.
 	precision mediump float;
 	
 	varying vec4 fColor;
+
+	varying vec2 vTextureCoord;
+
+    uniform sampler2D uSampler;
 	
 	void main(void) {
 		
 		// Using the passed vertex color
 		
 		gl_FragColor = fColor;
+		// gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t)) * fColor ;
+		
 	}
 
 </script>

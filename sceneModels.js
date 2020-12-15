@@ -334,6 +334,8 @@ sceneModels[0].isActive = true;
 
 sceneModels[0].rotXXOn = sceneModels[0].rotYYOn = false;
 
+sceneModels[0].kDiff = [ 1, 0.2, 0.2 ];
+
 // Model 2 --- Bottom Right
 
 // sceneModels.push( new tetrahedronModel( 1 ) );

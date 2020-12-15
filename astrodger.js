@@ -84,6 +84,8 @@ var asteriodesMOVE_ON = 0;
 
 var gameOver = false;
 
+var asteriodeSpeed = 0.8;
+
 // function countFrames() {
 	
 //    var now = new Date().getTime();
@@ -467,7 +469,10 @@ function processAsteroids() {
 				return;
 	}
 
-	if ((score % 500 == 0) && (spawnTop > 5)) spawnTop = spawnTop-5;
+	if ((score % 500 == 0) && (spawnTop > 5)) {
+		spawnTop = spawnTop-5;
+		asteriodeSpeed += 0.03;
+	}
 
 	for (i=0;i<sceneModels.length-1;i++){
 
@@ -482,7 +487,7 @@ function processAsteroids() {
 				gameOver = true;
 			}
 			//Speed and Spin
-			sceneModels[i+1].tz += elapsed / 100;
+			sceneModels[i+1].tz += asteriodeSpeed * elapsed / 100;
 			// sceneModels[i+1].rotAngleXX += sceneModels[i+1].rotXXDir * sceneModels[i+1].rotXXSpeed * (90 * elapsed) / 1000.0;
 			// sceneModels[i+1].rotYYDir += sceneModels[i+1].rotYYDir * sceneModels[i+1].rotYYSpeed * (90 * elapsed) / 1000.0;
 		}

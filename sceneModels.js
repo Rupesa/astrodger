@@ -281,16 +281,16 @@ function simpleTetrahedronModel( ) {
 }
 
 
-// function tetrahedronModel( subdivisionDepth = 0 ) {
+function tetrahedronModel( subdivisionDepth = 0 ) {
 	
-// 	var tetra = new simpleTetrahedronModel();
+ 	var tetra = new simpleTetrahedronModel();
 	
-// 	midPointRefinement( tetra.vertices, subdivisionDepth );
+ 	midPointRefinement( tetra.vertices, subdivisionDepth );
 	
-// 	computeVertexNormals( tetra.vertices, tetra.normals );
+	computeVertexNormals( tetra.vertices, tetra.normals );
 	
-// 	return tetra;
-// }
+	return tetra;
+}
 
 
 function sphereModel(subdivisionDepth=1) {
@@ -369,8 +369,8 @@ sceneModels[1].sx = 0.2; sceneModels[1].sy = 0.2; sceneModels[1].sz = 0.2;
 sceneModels.push(new sphereModel(1));
 sceneModels[2].sx = 0.2; sceneModels[2].sy = 0.2; sceneModels[2].sz = 0.2;
 
-sceneModels.push(new sphereModel(1));
-sceneModels[3].sx = 0.2; sceneModels[3].sy = 0.2; sceneModels[3].sz = 0.2;
+sceneModels.push(new tetrahedronModel(1));
+sceneModels[3].sx = 0.1; sceneModels[3].sy = 0.1; sceneModels[3].sz = 0.1;
 
 sceneModels.push(new sphereModel(1));
 sceneModels[4].sx = 0.2; sceneModels[4].sy = 0.2; sceneModels[4].sz = 0.2;
@@ -381,8 +381,8 @@ sceneModels[5].sx = 0.2; sceneModels[5].sy = 0.2; sceneModels[5].sz = 0.2;
 sceneModels.push(new sphereModel(1));
 sceneModels[6].sx = 0.2; sceneModels[6].sy = 0.2; sceneModels[6].sz = 0.2;
 
-sceneModels.push(new sphereModel(1));
-sceneModels[7].sx = 0.2; sceneModels[7].sy = 0.2; sceneModels[7].sz = 0.2;
+sceneModels.push(new tetrahedronModel(1));
+sceneModels[7].sx = 0.1; sceneModels[7].sy = 0.1; sceneModels[7].sz = 0.1;
 
 sceneModels.push(new sphereModel(1));
 sceneModels[8].sx = 0.2; sceneModels[8].sy = 0.2; sceneModels[8].sz = 0.2;
@@ -393,8 +393,8 @@ sceneModels[9].sx = 0.2; sceneModels[9].sy = 0.2; sceneModels[9].sz = 0.2;
 sceneModels.push(new sphereModel(1));
 sceneModels[10].sx = 0.2; sceneModels[10].sy = 0.2; sceneModels[10].sz = 0.2;
 
-sceneModels.push(new sphereModel(1));
-sceneModels[11].sx = 0.2; sceneModels[11].sy = 0.2; sceneModels[11].sz = 0.2;
+sceneModels.push(new tetrahedronModel(1));
+sceneModels[11].sx = 0.1; sceneModels[11].sy = 0.1; sceneModels[11].sz = 0.1;
 
 sceneModels.push(new sphereModel(1));
 sceneModels[12].sx = 0.2; sceneModels[12].sy = 0.2; sceneModels[12].sz = 0.2;

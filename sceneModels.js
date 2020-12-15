@@ -175,6 +175,86 @@ function cubeModel(subdivisionDepth) {
 }
 
 
+function simpleNaveModel( ) {
+	
+	var nave = new emptyModelFeatures();
+	
+	nave.vertices = [
+
+		0,2,0,
+		0,0,-4,
+		-3,-1,2,
+
+		0,2,0,
+		3,-1,2,
+		0,0,-4,
+
+		0,2,0,
+		-3,-1,2,
+		3,-1,2,
+
+		0,0,-4,
+		3,-1,2,
+		-3,-1,2,
+
+		0,0,-4,
+		3,-1,2,
+		6,-2,4,
+
+		0,0,-4,
+		-6,-2,4,
+		-3,-1,2,
+
+
+		0,-1,2,
+		6,-2,4,
+		3,-1,2,
+
+		0,-1,2,
+		-3,-1,2,
+		-6,-2,4,
+
+		0,-1,2,
+		0,0,-4,
+		6,-2,4,
+
+		0,-1,2,
+		-6,-2,4,
+		0,0,-4,
+
+		0,4,4,
+		-1,-1,2,
+		1,-1,2,
+
+		0,4,4,
+		0,2,0,
+		-1,-1,2,
+
+		0,4,4,
+		1,-1,2,
+		0,2,0,
+
+			 
+	];
+
+	computeVertexNormals( nave.vertices, nave.normals );
+
+	return nave;
+}
+
+
+function naveModel(subdivisionDepth) {
+
+	var nave = new simpleNaveModel();
+	
+	midPointRefinement( nave.vertices, subdivisionDepth );
+	
+	computeVertexNormals( nave.vertices, nave.normals );
+	
+	return nave;
+}
+
+
 function simpleTetrahedronModel( ) {
 	
 	var tetra = new emptyModelFeatures();
@@ -244,11 +324,11 @@ var sceneModels = [];
 
 // Model 1 --- Top Right
 
-sceneModels.push( new simpleCubeModel() );
+sceneModels.push( new simpleNaveModel() );
 
 sceneModels[0].tx = -0.25; sceneModels[0].ty = -0.25;
 
-sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.15;
+sceneModels[0].sx = sceneModels[0].sy = sceneModels[0].sz = 0.05;
 
 sceneModels[0].isActive = true;
 

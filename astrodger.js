@@ -865,15 +865,14 @@ function setEventListeners(){
 		}
 		
 	); 
-	
-	var x = 0;
-	var y = 0;
 
 	document.getElementById("my-canvas").addEventListener('click', e => {
-		x = e.offsetX;
-		y = e.offsetY;
-		sceneModels[0].tx = (parseInt(x/150) * 0.5)-0.75;
-		sceneModels[0].ty = -(parseInt(y/150) * 0.5)+0.75;
+		if(pauseMODE==0){
+			var x = e.offsetX;
+			var y = e.offsetY;
+			sceneModels[0].tx = (parseInt(x/150) * 0.5)-0.75;
+			sceneModels[0].ty = -(parseInt(y/150) * 0.5)+0.75;
+		}
 	});
 	
 	document.getElementById("Start-asteriode-movement").onclick = function(){

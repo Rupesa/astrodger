@@ -52,7 +52,7 @@ button {
   font-size: 20px;
   color: rgb(255, 255, 255);
   position:fixed;
-  margin-top: 90px;
+  margin-top: 120px;
   text-align: right;
   margin-left: 72%;
 }
@@ -62,7 +62,7 @@ button {
   font-size: 20px;
   color: rgb(255, 255, 255);
   position:fixed;
-  margin-top: 120px;
+  margin-top: 150px;
   text-align: right;
   margin-left: 72%;
 }
@@ -72,7 +72,7 @@ button {
   font-size: 20px;
   color: rgb(255, 255, 255);
   position:fixed;
-  margin-top: 150px;
+  margin-top: 90px;
   text-align: right;
   margin-left: 72%;
 }
@@ -86,7 +86,7 @@ button {
   position:fixed;
   margin-top: 720px;
   text-align: center;
-  margin-left: 855px;
+  margin-left: 44%;
   display:none;
 }
 

@@ -4,6 +4,12 @@
 //
 //  J. Madeira - November 2018
 //
+//	Rui Oliveira 89216
+//
+//	Rui Santos 89293
+//
+//  16 de Dezembro de 2020
+//
 //////////////////////////////////////////////////////////////////////////////
 
 //----------------------------------------------------------------------------
@@ -19,12 +25,6 @@ function emptyModelFeatures() {
 	this.vertices = [];
 
 	this.normals = [];
-
-	this.textureCoords = [];
-
-	this.vertexIndices = [];
-
-	this.eogajo = false;
 
 	// Transformation parameters
 
@@ -264,8 +264,6 @@ function naveModel(subdivisionDepth) {
 function simpleTetrahedronModel( ) {
 	
 	var tetra = new emptyModelFeatures();
-
-	tetra.eogajo = true;
 	
 	tetra.vertices = [
 
@@ -281,42 +279,6 @@ function simpleTetrahedronModel( ) {
         -1.000000,  0.000000, -0.707000, 
          1.000000,  0.000000, -0.707000, 
          0.000000, -1.000000,  0.707000,
-	];
-
-	tetra.textureCoords = [
-		0.0, 0.0,
-		1.0, 0.0,
-		1.0, 1.0,
-	  
-		0.0, 1.0,
-		0.0, 0.0,
-		1.0, 0.0,
-	  
-		1.0, 1.0,
-		0.0, 1.0,
-		0.0, 0.0,
-	  
-		1.0, 0.0,
-		1.0, 1.0,
-		0.0, 1.0,
-	];
-
-	tetra.vertexIndices = [
-		0.0, 0.0,
-		1.0, 0.0,
-		1.0, 1.0,
-	  
-		0.0, 1.0,
-		0.0, 0.0,
-		1.0, 0.0,
-	  
-		1.0, 1.0,
-		0.0, 1.0,
-		0.0, 0.0,
-	  
-		1.0, 0.0,
-		1.0, 1.0,
-		0.0, 1.0,
 	];
 
 	computeVertexNormals( tetra.vertices, tetra.normals );
@@ -440,7 +402,7 @@ sceneModels.push(new sphereModel(1));
 sceneModels[10].sx = 0.2; sceneModels[10].sy = 0.2; sceneModels[10].sz = 0.2;
 
 sceneModels.push(new tetrahedronModel(1));
-sceneModels[11].sx = 0.1; sceneModels[11].sy = 0.1; sceneModels[11].sz = 0.1;
+sceneModels[11].sx = 0.15; sceneModels[11].sy = 0.15; sceneModels[11].sz = 0.15;
 
 sceneModels.push(new sphereModel(1));
 sceneModels[12].sx = 0.2; sceneModels[12].sy = 0.2; sceneModels[12].sz = 0.2;

@@ -75,13 +75,7 @@ The fragment shader is the same simple one.
 	
 	uniform vec3 k_specular;
 	
-	uniform float shininess;
-
-	// attribute vec3 aVertexPosition;
-
-	attribute vec2 aTextureCoord;
-	
-	varying vec2 vTextureCoord;
+    uniform float shininess;
         
     void main(void) {
 		
@@ -93,11 +87,7 @@ The fragment shader is the same simple one.
 		
 		// And multiplying by the Projection and the Model-View matrix
 		
-		gl_Position = uPMatrix * uMVMatrix * vec4(vPosition, 1.0);
-		
-		// gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-		vTextureCoord = aTextureCoord;
+        gl_Position = uPMatrix * uMVMatrix * vec4(vPosition, 1.0);
         
         // Phong Illumination Model
         
@@ -195,9 +185,7 @@ The fragment shader is the same simple one.
 
 		   // Adding the components
 		
-		   fColor += diffuse + specular;
-		   
-		   
+           fColor += diffuse + specular;
 	   }
 	}
     
@@ -208,18 +196,12 @@ The fragment shader is the same simple one.
 	precision mediump float;
 	
 	varying vec4 fColor;
-
-	varying vec2 vTextureCoord;
-
-    uniform sampler2D uSampler;
 	
 	void main(void) {
 		
 		// Using the passed vertex color
 		
 		gl_FragColor = fColor;
-		// gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t)) * fColor ;
-		
 	}
 
 </script>
@@ -257,9 +239,9 @@ The fragment shader is the same simple one.
 <body onload="runWebGL();">
 
 	
+	<p id="nivel">LEVEL: <label id="Nivel">0</label> </p>
 	<p id="score">SCORE: <label id="ScoreLabel">0</label> </p>
 	<p id="highscore">HIGHEST SCORE: <label id="HighScoreLabel">0</label> </p>
-	<p id="nivel">LEVEL: <label id="Nivel">0</label> </p>
 	<p id="gameover">GAME OVER!<label id="GameOverLabel"></label> </p>
 	<p id="controls">CONTROLS:<br> W - UP <br> A - LEFT <br> S - DOWN <br> D - RIGHT <br>  </p>
 	<button onclick="myFunctionStart()" id="Start-asteriode-movement">START</button>
@@ -272,20 +254,6 @@ The fragment shader is the same simple one.
 		<canvas id="my-canvas" style="border:2px solid #ffffff;" width="600" height="600"></canvas>
 	</div>
 
-	
-
-
-	<!-- <p>Read a 3D model from a <b>OBJ file</b>:
-		
-	<input type="file" id="obj-file" name="file">
-	
-	</p>
-	
-	<p>Read a 3D model from a <b>text file</b>:
-	
-	<input type="file" id="text-file" name="file">
-	
-	</p> -->
 	
 </body>
 

@@ -1,12 +1,18 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  WebGL_example_24_GPU_per_vertex.js 
+//  astrodger.js 
 //
-//  Phong Illumination Model on the GPU - Per vertex shading - Several light sources
+//  Astrodger
 //
 //  Reference: E. Angel examples
 //
-//  J. Madeira - November 2017 + November 2018
+//  J. Madeira - Oct. 2015 + November 2017
+//
+//	Rui Oliveira 89216
+//
+//	Rui Santos 89293
+//
+//  16 de Dezembro de 2020
 //
 //////////////////////////////////////////////////////////////////////////////
 
@@ -15,10 +21,6 @@
 //
 // Global Variables
 //
-
-var cubeVertexTextureCoordBuffer;
-
-var cubeVertexIndexBuffer = null;
 
 var gl = null; // WebGL context
 
@@ -125,31 +127,6 @@ var asteriodeSpeed = 0.8;
 
 // Handling the Vertex Coordinates and the Vertex Normal Vectors
 
-
-function handleLoadedTexture(texture) {
-	
-	gl.bindTexture(gl.TEXTURE_2D, texture);
-	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-	gl.bindTexture(gl.TEXTURE_2D, null);
-}
-
-
-var webGLTexture;
-
-function initTexture() {
-	
-	webGLTexture = gl.createTexture();
-	webGLTexture.image = new Image();
-	webGLTexture.image.onload = function () {
-		handleLoadedTexture(webGLTexture)
-	}
-
-	webGLTexture.image.src = "ice.jpg";
-}
-
 function initBuffers( model ) {	
 	
 	// Vertex Coordinates
@@ -178,43 +155,7 @@ function initBuffers( model ) {
 	
 	gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, 
 			triangleVertexNormalBuffer.itemSize, 
-			gl.FLOAT, false, 0, 0);
-
-	// Textures Coordinates
-	
-	cubeVertexTextureCoordBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexTextureCoordBuffer);
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(model.textureCoords), gl.STATIC_DRAW);
-	cubeVertexTextureCoordBuffer.itemSize = 2;
-	cubeVertexTextureCoordBuffer.numItems = model.textureCoords.length;
-
-	// console.log(cubeVertexTextureCoordBuffer.numItems)
-
-	// Associating to the vertex shader
-	
-	gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexTextureCoordBuffer);
-    gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, cubeVertexTextureCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
-
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, webGLTexture);
-        
-	gl.uniform1i(shaderProgram.samplerUniform, 0);
-
-	// Vertex indices
-	
-    cubeVertexIndexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(model.vertexIndices), gl.STATIC_DRAW);
-    cubeVertexIndexBuffer.itemSize = 1;
-    cubeVertexIndexBuffer.numItems = model.vertexIndices.length;
-	
-	// The vertex indices
-    
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
-
-	// Drawing the triangles --- NEW --- DRAWING ELEMENTS 
-	
-	gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+			gl.FLOAT, false, 0, 0);	
 }
 
 //----------------------------------------------------------------------------
@@ -256,8 +197,6 @@ function drawModel( model,
 	// Vertex Coordinates and Vertex Normal Vectors
 	
 	initBuffers(model);
-	
-	initTexture();
 	
 	// Material properties
 	
@@ -475,19 +414,21 @@ function animate() {
 		
 		for(var i = 0; i < sceneModels.length; i++ )
 	    {
-			if( sceneModels[i].rotXXOn ) {
+			if( sceneModels[i].isActive) {
+				if( sceneModels[i].rotXXOn ) {
 
-				sceneModels[i].rotAngleXX += sceneModels[i].rotXXDir * sceneModels[i].rotXXSpeed * (90 * elapsed) / 1000.0;
-			}
+					sceneModels[i].rotAngleXX += sceneModels[i].rotXXDir * sceneModels[i].rotXXSpeed * (90 * elapsed) / 1000.0;
+				}
 
-			if( sceneModels[i].rotYYOn ) {
+				if( sceneModels[i].rotYYOn ) {
 
-				sceneModels[i].rotAngleYY += sceneModels[i].rotYYDir * sceneModels[i].rotYYSpeed * (90 * elapsed) / 1000.0;
-			}
+					sceneModels[i].rotAngleYY += sceneModels[i].rotYYDir * sceneModels[i].rotYYSpeed * (90 * elapsed) / 1000.0;
+				}
 
-			if( sceneModels[i].rotZZOn ) {
+				if( sceneModels[i].rotZZOn ) {
 
-				sceneModels[i].rotAngleZZ += sceneModels[i].rotZZDir * sceneModels[i].rotZZSpeed * (90 * elapsed) / 1000.0;
+					sceneModels[i].rotAngleZZ += sceneModels[i].rotZZDir * sceneModels[i].rotZZSpeed * (90 * elapsed) / 1000.0;
+				}
 			}
 		}
 		
@@ -532,12 +473,14 @@ function processAsteroids() {
 		
 		asteriodesMOVE_ON = 0;
 		pauseMODE = 1;
-				reset();
-				return;
+		reset();
+		return;
 	}
 
-	if ((score % 500 == 0) && (spawnTop > 5)) {
-		spawnTop = spawnTop-5;
+	if (score % 500 == 0) {
+		if (spawnTop > 5) {
+			spawnTop = spawnTop-5;
+		}
 		asteriodeSpeed += 0.03;
 	}
 
@@ -590,9 +533,10 @@ function getFreeIndex() {
 
 function reset() {
 	if(score>highscore) highscore = score;
-	score = 0;
+	//score = 0;
 	spawnTop = 50;
 	spawnCount = 0;
+	asteriodeSpeed = 0.8;
 	for (i=0;i<sceneModels.length-1;i++){
 		sceneModels[i+1].isActive=false;
 	}
@@ -601,52 +545,6 @@ function reset() {
 	return -1;
 }
 
-
-/*
-var mouseDown = false;
-
-var lastMouseX = null;
-
-var lastMouseY = null;
-
-function handleMouseDown(event) {
-	
-    mouseDown = true;
-  
-  
-    lastMouseY = globalAngleYY;
-}
-
-function handleMouseUp(event) {
-
-    mouseDown = false;
-}
-
-function handleMouseMove(event) {
-
-    if (!mouseDown) {
-	  
-      return;
-    } 
-  
-    // Rotation angles proportional to cursor displacement
-    
-  
-    var newY = globalAngleYY;
-
-    //var deltaX = newX - lastMouseX;
-    //mvMatrix = mult(mvMatrix, rotationYYMatrix(globalAngleYY));
-    //angleXX += radians( 10 * deltaX  )
-
-    var deltaY = newY - lastMouseY;
-    
-    globalAngleYY += radians( 10 * deltaY  );
-    
-    lastMouseX = newX;
-    
-    lastMouseY = newY;
-  }
-  */
 
 //----------------------------------------------------------------------------
 
@@ -684,218 +582,6 @@ function outputInfos(){
 
 function setEventListeners(){
 	
-    // // // Dropdown list
-	
-	// var projection = document.getElementById("projection-selection");
-	
-	// projection.addEventListener("click", function(){
-				
-	// 	// Getting the selection
-		
-	// 	var p = projection.selectedIndex;
-				
-	// 	switch(p){
-			
-	// 		case 0 : projectionType = 0;
-	// 			break;
-			
-	// 		case 1 : projectionType = 1;
-	// 			break;
-	// 	}  	
-	// });      
-
-	// Dropdown list
-	
-	// var list = document.getElementById("rendering-mode-selection");
-	
-	// list.addEventListener("click", function(){
-				
-	// 	// Getting the selection
-		
-	// 	var mode = list.selectedIndex;
-				
-	// 	switch(mode){
-			
-	// 		case 0 : primitiveType = gl.TRIANGLES;
-	// 			break;
-			
-	// 		case 1 : primitiveType = gl.LINE_LOOP;
-	// 			break;
-			
-	// 		case 2 : primitiveType = gl.POINTS;
-	// 			break;
-	// 	}
-	// });      
-
-	// Button events
-	
-	// document.getElementById("XX-on-off-button").onclick = function(){
-		
-	// 	// Switching on / off
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		if( sceneModels[i].rotXXOn ) {
-
-	// 			sceneModels[i].rotXXOn = false;
-	// 		}
-	// 		else {
-	// 			sceneModels[i].rotXXOn = true;
-	// 		}	
-	// 	}
-	// };
-
-	// document.getElementById("XX-direction-button").onclick = function(){
-		
-	// 	// Switching the direction
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		if( sceneModels[i].rotXXDir == 1 ) {
-
-	// 			sceneModels[i].rotXXDir = -1;
-	// 		}
-	// 		else {
-	// 			sceneModels[i].rotXXDir = 1;
-	// 		}	
-	// 	}
-	// };      
-
-	// document.getElementById("XX-slower-button").onclick = function(){
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		sceneModels[i].rotXXSpeed *= 0.75; 
-	// 	}
-	// };      
-
-	// document.getElementById("XX-faster-button").onclick = function(){
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		sceneModels[i].rotXXSpeed *= 1.25; 
-	// 	}
-	// };      
-
-	// document.getElementById("YY-on-off-button").onclick = function(){
-		
-	// 	// Switching on / off
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		if( sceneModels[i].rotYYOn ) {
-
-	// 			sceneModels[i].rotYYOn = false;
-	// 		}
-	// 		else {
-	// 			sceneModels[i].rotYYOn = true;
-	// 		}	
-	// 	}
-	// };
-
-	// document.getElementById("YY-direction-button").onclick = function(){
-		
-	// 	// Switching the direction
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		if( sceneModels[i].rotYYDir == 1 ) {
-
-	// 			sceneModels[i].rotYYDir = -1;
-	// 		}
-	// 		else {
-	// 			sceneModels[i].rotYYDir = 1;
-	// 		}	
-	// 	}
-	// };      
-
-	// document.getElementById("YY-slower-button").onclick = function(){
-
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		sceneModels[i].rotYYSpeed *= 0.75; 
-	// 	}
-	// };      
-
-	// document.getElementById("YY-faster-button").onclick = function(){
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		sceneModels[i].rotYYSpeed *= 1.25; 
-	// 	}
-	// };      
-
-	// document.getElementById("ZZ-on-off-button").onclick = function(){
-		
-	// 	// Switching on / off
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		if( sceneModels[i].rotZZOn ) {
-
-	// 			sceneModels[i].rotZZOn = false;
-	// 		}
-	// 		else {
-	// 			sceneModels[i].rotZZOn = true;
-	// 		}	
-	// 	}
-	// };
-
-	// document.getElementById("ZZ-direction-button").onclick = function(){
-		
-	// 	// Switching the direction
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		if( sceneModels[i].rotZZDir == 1 ) {
-
-	// 			sceneModels[i].rotZZDir = -1;
-	// 		}
-	// 		else {
-	// 			sceneModels[i].rotZZDir = 1;
-	// 		}	
-	// 	}
-	// };      
-
-	// document.getElementById("ZZ-slower-button").onclick = function(){
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		sceneModels[i].rotZZSpeed *= 0.75; 
-	// 	}
-	// };      
-
-	// document.getElementById("ZZ-faster-button").onclick = function(){
-		
-	// 	// For every model
-		
-	// 	for(var i = 0; i < sceneModels.length; i++ )
-	//     {
-	// 		sceneModels[i].rotZZSpeed *= 1.25; 
-	// 	}
-	// };  
 	
 	// Key events
 	document.addEventListener("keypress", function(event) {
@@ -904,28 +590,17 @@ function setEventListeners(){
 			var key = event.keyCode; // ASCII
 
 			switch(key){
-				case 97: //left ou 37/97
+				case 97: //left 37/97
 					if (sceneModels[0].tx > -0.75) sceneModels[0].tx -= 0.5;
 					break;
-				case 100: //right ou 39/100
+				case 100: //right 39/100
 					if (sceneModels[0].tx < 0.75) sceneModels[0].tx += 0.5;
 					break;
-				case 119: //up ou 38/119
+				case 119: //up 38/119
 					if (sceneModels[0].ty < 0.75) sceneModels[0].ty += 0.5;	
 					break;
-				case 115: //down ou 40/115
+				case 115: //down 40/115
 					if (sceneModels[0].ty > -0.75) sceneModels[0].ty -= 0.5;
-					break;
-
-				case 187:
-					scale_up()
-					break;
-				case 189:
-					scale_down()
-					break;
-
-				case 82:
-					reset()
 					break;
 
 				default:
@@ -977,6 +652,7 @@ function setEventListeners(){
 		document.getElementById("Pause-asteriode-movement").style.display = "block";
 		document.getElementById("gameover").style.display = "none";
 		pauseMODE = 0;
+		score = 0;
 		reset();
 		asteriodesMOVE_ON = 1;
 		lightSources[0].setPosition( -2.0, -2.0, -2.0, 0.0 );

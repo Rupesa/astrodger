@@ -26,6 +26,10 @@ function emptyModelFeatures() {
 
 	this.normals = [];
 
+	this.textureCoords = [];
+
+	this.vertexIndices = [];
+
 	// Transformation parameters
 
 	// Displacement vector
@@ -279,6 +283,42 @@ function simpleTetrahedronModel( ) {
         -1.000000,  0.000000, -0.707000, 
          1.000000,  0.000000, -0.707000, 
          0.000000, -1.000000,  0.707000,
+	];
+
+	tetra.textureCoords = [
+		0.0, 0.0,
+		1.0, 0.0,
+		1.0, 1.0,
+	  
+		0.0, 1.0,
+		0.0, 0.0,
+		1.0, 0.0,
+	  
+		1.0, 1.0,
+		0.0, 1.0,
+		0.0, 0.0,
+	  
+		1.0, 0.0,
+		1.0, 1.0,
+		0.0, 1.0,
+	];
+
+	tetra.vertexIndices = [
+		0.0, 0.0,
+		1.0, 0.0,
+		1.0, 1.0,
+	  
+		0.0, 1.0,
+		0.0, 0.0,
+		1.0, 0.0,
+	  
+		1.0, 1.0,
+		0.0, 1.0,
+		0.0, 0.0,
+	  
+		1.0, 0.0,
+		1.0, 1.0,
+		0.0, 1.0,
 	];
 
 	computeVertexNormals( tetra.vertices, tetra.normals );
